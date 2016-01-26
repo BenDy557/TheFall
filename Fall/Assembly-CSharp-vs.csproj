@@ -46,17 +46,20 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Camera.cs" />
-     <Compile Include="Assets\Scripts\CharacterController.cs" />
-     <Compile Include="Assets\Scripts\CharacterFire.cs" />
-     <Compile Include="Assets\Scripts\Cube.cs" />
-     <Compile Include="Assets\Scripts\Hazard.cs" />
-     <Compile Include="Assets\Scripts\Player.cs" />
-     <Compile Include="Assets\Scripts\Reticule.cs" />
-     <Compile Include="Assets\Scripts\Rotate.cs" />
-     <Compile Include="Assets\Scripts\WallDrag.cs" />
-     <Compile Include="Assets\Scripts\bullet.cs" />
-     <Compile Include="Assets\Scripts\groundCheck.cs" />
+     <Compile Include="Assets\Scripts\Character\CharacterController.cs" />
+     <Compile Include="Assets\Scripts\Character\CharacterFire.cs" />
+     <Compile Include="Assets\Scripts\Character\MoveCamera.cs" />
+     <Compile Include="Assets\Scripts\Character\Player.cs" />
+     <Compile Include="Assets\Scripts\Character\Reticule.cs" />
+     <Compile Include="Assets\Scripts\Character\WallDrag.cs" />
+     <Compile Include="Assets\Scripts\Character\bullet.cs" />
+     <Compile Include="Assets\Scripts\Character\groundCheck.cs" />
+     <Compile Include="Assets\Scripts\Generation\EndTrigger.cs" />
+     <Compile Include="Assets\Scripts\Generation\GenerateLevel.cs" />
+     <Compile Include="Assets\Scripts\Generation\PrefabScript.cs" />
+     <Compile Include="Assets\Scripts\Terrain\Cube.cs" />
+     <Compile Include="Assets\Scripts\Terrain\Hazard.cs" />
+     <Compile Include="Assets\Scripts\Terrain\Rotate.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
