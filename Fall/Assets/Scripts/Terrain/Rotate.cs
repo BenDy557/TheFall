@@ -16,21 +16,21 @@ public class Rotate : MonoBehaviour {
 	void Update () {
 		if (Input.GetButtonDown ("Rotate"))
 		{
-			makeRotate ();
+			makeRotate (1*Mathf.Sign(Random.Range(-1,1)));
 		}
 	}
 
-	public void makeRotate()
+	public void makeRotate(float dir)
 	{
 		if(rotateBool == false)
 		{
-			StartCoroutine(rotate(new Vector3(0,0,0)));
+			StartCoroutine(rotate(dir));
 		}
 	}
-	IEnumerator rotate(Vector3 ImpulseDirection)
+	IEnumerator rotate(float dir)
 	{
 		foreach (GameObject obj in Children) {
-			obj.GetComponent<CharacterController>().Shunt(-1);
+			obj.GetComponent<CharacterController>().Shunt(dir);
 		}
 
 		rotateBool = true;
@@ -41,7 +41,7 @@ public class Rotate : MonoBehaviour {
 			{
 				rotDef = 90 - rotSoFar;
 			}
-			transform.Rotate (0, 0, rotDef);
+			transform.Rotate (0, 0, Mathf.Sign(dir)*rotDef);
 			rotSoFar += rotDef;
 			yield return 0;
 		}
