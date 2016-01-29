@@ -46,10 +46,12 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Camera\LeaderCamera.cs" />
      <Compile Include="Assets\Scripts\Character\CharacterController.cs" />
      <Compile Include="Assets\Scripts\Character\CharacterFire.cs" />
      <Compile Include="Assets\Scripts\Character\MoveCamera.cs" />
      <Compile Include="Assets\Scripts\Character\Player.cs" />
+     <Compile Include="Assets\Scripts\Character\RespawnManager.cs" />
      <Compile Include="Assets\Scripts\Character\Reticule.cs" />
      <Compile Include="Assets\Scripts\Character\WallDrag.cs" />
      <Compile Include="Assets\Scripts\Character\bullet.cs" />

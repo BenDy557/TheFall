@@ -1,15 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Generation\GenerateLevel.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Character\RespawnManager.cs">
     <Files>
-      <File FileName="Assets\Scripts\Generation\GenerateLevel.cs" Line="16" Column="13" />
-      <File FileName="Assets\Scripts\Character\MoveCamera.cs" Line="9" Column="1" />
-      <File FileName="Assets\Scripts\Generation\PrefabScript.cs" Line="6" Column="31" />
-      <File FileName="Assets\Scripts\Terrain\Cube.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Camera\LeaderCamera.cs" Line="42" Column="4" />
+      <File FileName="Assets\Scripts\Character\RespawnManager.cs" Line="38" Column="71" />
+      <File FileName="Assets\Scripts\Terrain\Hazard.cs" Line="19" Column="1" />
+      <File FileName="Assets\Scripts\Character\Player.cs" Line="58" Column="31" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="M:\Mprof\Fall\TheFall\Fall\Assets\Scripts\Terrain\Hazard.cs" line="19" />
+      <Breakpoint file="M:\Mprof\Fall\TheFall\Fall\Assets\Scripts\Character\RespawnManager.cs" line="36" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

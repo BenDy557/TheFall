@@ -16,7 +16,7 @@ public class Hazard : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 
 		if (other.tag == "Player") {
-			Destroy (other.gameObject);
+			other.GetComponent<Player>().Kill();
 		}
 	}
 }
