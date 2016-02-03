@@ -1,18 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Character\RespawnManager.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Pickups\Pickup.cs">
     <Files>
-      <File FileName="Assets\Scripts\Camera\LeaderCamera.cs" Line="42" Column="4" />
-      <File FileName="Assets\Scripts\Character\RespawnManager.cs" Line="38" Column="71" />
-      <File FileName="Assets\Scripts\Terrain\Hazard.cs" Line="19" Column="1" />
-      <File FileName="Assets\Scripts\Character\Player.cs" Line="58" Column="31" />
+      <File FileName="Assets\Scripts\Pickups\Pickup.cs" Line="18" Column="6" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="M:\Mprof\Fall\TheFall\Fall\Assets\Scripts\Terrain\Hazard.cs" line="19" />
-      <Breakpoint file="M:\Mprof\Fall\TheFall\Fall\Assets\Scripts\Character\RespawnManager.cs" line="36" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

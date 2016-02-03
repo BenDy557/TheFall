@@ -21,7 +21,7 @@ public class bullet : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		if (other.tag == "Ground"&& other.gameObject.GetComponent<Rotate>()) {
 			float dir = gameObject.transform.position.x-other.transform.position.x ;
-			other.GetComponent<Rotate>().makeRotate(dir);
+			other.GetComponent<Rotate>().MakeRotate(dir);
 			Destroy(gameObject);
 		}
 		if (other.tag == "Player" && other.gameObject != parentPlayer) {

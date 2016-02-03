@@ -14,13 +14,13 @@ public class Rotate : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetButtonDown ("Rotate"))
+		/*if (Input.GetButtonDown ("Player1Ability"))
 		{
 			makeRotate (1*Mathf.Sign(Random.Range(-1,1)));
-		}
+		}*/
 	}
 
-	public void makeRotate(float dir)
+	public void MakeRotate(float dir)
 	{
 		if(rotateBool == false)
 		{
