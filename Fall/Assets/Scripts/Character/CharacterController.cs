@@ -88,7 +88,7 @@ public class CharacterController : MonoBehaviour {
 	
 	void FixedUpdate()
 	{
-		float h = Input.GetAxis(name+"Horizontal");
+		float h = Input.GetAxis(name+"LeftStickX");
 		
 		//anim.SetFloat("Speed", Mathf.Abs(h));
 		if (!grabbingLeft && !grabbingRight) {
