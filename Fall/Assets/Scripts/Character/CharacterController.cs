@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum PlayerState {Idle,Running,Jumping,WallGrabLeft,WallGrabRight};
+
 public class CharacterController : MonoBehaviour {
 
 	
@@ -8,6 +10,7 @@ public class CharacterController : MonoBehaviour {
 	[HideInInspector] public bool jump = false;
 	[HideInInspector] public bool jumpLeft = false;
 	[HideInInspector] public bool jumpRight = false;
+	public PlayerState m_PlayerState;
 	public string name;
 	public float moveForce = 100;
 	public float maxSpeed = 5f;
@@ -22,7 +25,8 @@ public class CharacterController : MonoBehaviour {
 	public bool grounded = false;
 	public bool grabbingLeft = false;
 	public bool grabbingRight = false;
-	//private Animator anim;
+	public Animator anim;
+	public GameObject Model;
 	private Rigidbody rigidBody;
 	private bool m_DoubleJump = false;
 	private bool m_DoubleJumpAvailable = true;
@@ -32,11 +36,13 @@ public class CharacterController : MonoBehaviour {
 		//anim = GetComponent<Animator>();
 		rigidBody = GetComponent<Rigidbody>();
 		height = GetComponent<CapsuleCollider> ().height *transform.localScale.y;
+		m_PlayerState = PlayerState.Idle;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+
 		grounded = Physics.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
 
 		Vector3 grabPos = leftGrabCheck.position;
@@ -64,7 +70,7 @@ public class CharacterController : MonoBehaviour {
 			grounded = true; grabbingLeft = false; grabbingRight = false;
 		}
 
-
+		//set jump values
 		if (Input.GetButtonDown (name+"Jump") && grounded) {
 			jump = true;
 		}
@@ -80,10 +86,21 @@ public class CharacterController : MonoBehaviour {
 			m_DoubleJumpAvailable = false;
 		}
 
+		//reset double jump
 		if ((grounded || grabbingLeft || grabbingRight) && !m_DoubleJumpAvailable) {
 			m_DoubleJumpAvailable = true;
 		}
+	
+		if (jump || jumpLeft || jumpRight) {
+			TransitionState(PlayerState.Jumping);
+		}
+		if (grabbingLeft) {
+			TransitionState (PlayerState.WallGrabLeft);
+		} else if (grabbingRight) {
+			TransitionState (PlayerState.WallGrabRight);
+		}
 
+	
 	}
 	
 	void FixedUpdate()
@@ -97,12 +114,21 @@ public class CharacterController : MonoBehaviour {
 		
 			if (Mathf.Abs (rigidBody.velocity.x) > maxSpeed)
 				rigidBody.velocity = new Vector2 (Mathf.Sign (rigidBody.velocity.x) * maxSpeed, rigidBody.velocity.y);
+
+			if(h!=0)
+			{
+				TransitionState(PlayerState.Running);
+			}
+			else{
+				TransitionState(PlayerState.Idle);
+			}
 		}
 
-		/*if (h > 0 && !facingRight)
+		if (h > 0 && !facingRight) {
 			Flip ();
-		else if (h < 0 && facingRight)
-			Flip ();*/
+		} else if (h < 0 && facingRight) {
+			Flip ();
+		}
 		
 		if (jump) {
 			//anim.SetTrigger("Jump");
@@ -124,15 +150,61 @@ public class CharacterController : MonoBehaviour {
 			m_DoubleJump = false;
 		}
 	}
-	
-	/*
+
+
 	void Flip()
 	{
 		facingRight = !facingRight;
-		Vector3 theScale = transform.localScale;
-		theScale.x *= -1;
-		transform.localScale = theScale;
-	}*/
+		Vector3 theScale = Model.transform.localScale;
+		theScale.z *= -1;
+		Model.transform.localScale = theScale;
+	}
+
+	void TransitionState(PlayerState state)
+	{
+		m_PlayerState = state;
+		switch (state) {
+		case PlayerState.Idle:
+			anim.SetBool("Idle",true);
+			anim.SetBool("Running",false);
+			anim.SetBool("Sliding",false);
+			break;
+		case PlayerState.Jumping:
+			anim.SetTrigger("Jump");
+			anim.SetBool("Idle",false);
+			anim.SetBool("Running",false);
+			anim.SetBool("Sliding",false);
+			break;
+		case PlayerState.Running:
+			if(!anim.GetCurrentAnimatorStateInfo(0).IsName("Jumping"))
+			{
+				anim.SetBool("Idle",false);
+				anim.SetBool("Running",true);
+				anim.SetBool("Sliding",false);
+			}
+			break;
+		case PlayerState.WallGrabLeft:
+			anim.SetBool("Idle",false);
+			anim.SetBool("Running",false);
+			anim.SetBool("Sliding",true);
+
+			if(facingRight)
+			{
+				Flip();
+			}
+			break;
+		case PlayerState.WallGrabRight:
+			anim.SetBool("Idle",false);
+			anim.SetBool("Running",false);
+			anim.SetBool("Sliding",true);
+
+			if(!facingRight)
+			{
+				Flip();
+			}
+			break;
+		}
+	}
 
 	 public void Shunt(float dir)
 	{
