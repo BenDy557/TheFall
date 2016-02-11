@@ -188,7 +188,7 @@ public class CharacterController : MonoBehaviour {
 			anim.SetBool("Running",false);
 			anim.SetBool("Sliding",true);
 
-			if(!facingRight)
+			if(facingRight)
 			{
 				Flip();
 			}
@@ -198,7 +198,7 @@ public class CharacterController : MonoBehaviour {
 			anim.SetBool("Running",false);
 			anim.SetBool("Sliding",true);
 
-			if(facingRight)
+			if(!facingRight)
 			{
 				Flip();
 			}
