@@ -14,12 +14,12 @@ public class WallDrag : MonoBehaviour {
 	}
 	void OnTriggerEnter(Collider other) {
 		if (other.tag == "Ground") {
-			gameObject.transform.parent.gameObject.GetComponent<Player> ().increaseDrag ();
+			gameObject.transform.parent.gameObject.GetComponent<Player> ().IncreaseDrag ();
 		}
 	}
 	void OnTriggerExit(Collider other) {
 		if (other.tag == "Ground") {
-			gameObject.transform.parent.gameObject.GetComponent<Player> ().lowerDrag ();
+			gameObject.transform.parent.gameObject.GetComponent<Player> ().LowerDrag ();
 		}
 	}
 }

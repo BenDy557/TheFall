@@ -13,15 +13,16 @@ public class Player : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+    {
 
 		if(Input.GetKey(KeyCode.D))
-		   {
+        {
 			Kill ();
 		}
 	
 		if(Input.GetKeyDown(KeyCode.Escape))
-		   {
+        {
 			Application.Quit();
 		}
 	}
@@ -30,7 +31,8 @@ public class Player : MonoBehaviour {
 	{
 	
 	}
-	public void toggleDrag()
+
+	public void ToggleDrag()
 	{
 		if (highDrag == false) {
 			
@@ -42,14 +44,14 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	public void lowerDrag()
+	public void LowerDrag()
 	{
 
 			gameObject.GetComponent<Rigidbody> ().drag = lDrag;
 			highDrag = false;
 	}
 
-	public void increaseDrag()
+	public void IncreaseDrag()
 	{
 		
 		gameObject.GetComponent<Rigidbody> ().drag = hDrag;
