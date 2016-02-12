@@ -4,19 +4,20 @@ using System.Collections;
 
 public class timer : MonoBehaviour {
 	
-
-	private float timeInLead;
+	public float timeneeded;
+	//private float timeInLead;
 	private GameObject[] players;
 	private bool inLead;
-	private string timertext;
-
+	private TextMesh timertext;
+	GameObject manager;
 
 
 	// Use this for initialization
 	void Start () {
-		timeInLead = 0;
-		timertext = "";
-
+		//timeInLead = 0;
+//		timertext = "";
+		timertext = GetComponentInChildren<TextMesh> ();
+		manager = GameObject.FindGameObjectWithTag ("GameManager");
 	}
 	
 	// Update is called once per frame
@@ -25,27 +26,46 @@ public class timer : MonoBehaviour {
 
 
 		players = GameObject.FindGameObjectsWithTag ("Player");
+
 		if (players.Length == 0) {
 			Debug.Log ("no players found");
 		}
-		foreach (GameObject player in players) {
-			if (player.transform.position.z > transform.position.z) {
+			//foreach (GameObject player in players) {
+			/*if (player.transform.position.y > transform.position.y) {
 				inLead = false;
 			} else {
 				inLead = true;
+			}*/
+
+			inLead = true;
+			foreach (GameObject player in players) {
+				if (player.transform.position.y > transform.position.y) {
+					inLead = false;
+				}
 			}
-		}
+
+
 		if (inLead) {
-			timeInLead += Time.deltaTime;
-			timertext = timeInLead.ToString ();
+			Color tempcolor = timertext.color;
+			tempcolor.a = 1;
+			timertext.color = tempcolor;
+			//timeInLead += Time.deltaTime;
+			timeneeded -=Time.deltaTime;
+
 		} 
 		else {
-			timertext = "";
+			Color tempcolor = timertext.color;
+			tempcolor.a = 0.5f;
+			timertext.color = tempcolor;
+			//timertext = "";
 		}
-		GetComponentInChildren<TextMesh> ().text = timertext;
+		timertext.text = timeneeded.ToString ("F2");
+		if (timeneeded <= 0) {
+			manager.GetComponent<WinManager>().IWon(transform.name);
 		}
-		
 	}
+		
+}
 	
 
 

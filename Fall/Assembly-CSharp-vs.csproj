@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\Generation\EndTrigger.cs" />
      <Compile Include="Assets\Scripts\Generation\GenerateLevel.cs" />
      <Compile Include="Assets\Scripts\Generation\PrefabScript.cs" />
+     <Compile Include="Assets\Scripts\Managers\WinManager.cs" />
      <Compile Include="Assets\Scripts\Pickups\Pickup.cs" />
      <Compile Include="Assets\Scripts\Pickups\PickupSpawn.cs" />
      <Compile Include="Assets\Scripts\Pickups\PlayerAbility.cs" />
