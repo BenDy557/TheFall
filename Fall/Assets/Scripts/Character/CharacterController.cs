@@ -19,7 +19,7 @@ public class CharacterController : MonoBehaviour {
 	public Transform leftGrabCheck;
 	public Transform rightGrabCheck;
 	public float shuntForce = 2000.0f;
-
+	public bool CanDoubleJump = false;
 	public float height;
 	
 	public bool grounded = false;
@@ -33,7 +33,7 @@ public class CharacterController : MonoBehaviour {
 	// Use this for initialization
 	void Awake () 
 	{
-		//anim = GetComponent<Animator>();
+		anim = Model.GetComponent<Animator>();
 		rigidBody = GetComponent<Rigidbody>();
 		height = GetComponent<CapsuleCollider> ().height *transform.localScale.y;
 		m_PlayerState = PlayerState.Idle;
@@ -144,7 +144,7 @@ public class CharacterController : MonoBehaviour {
 			rigidBody.AddForce (new Vector2 (200f, jumpForce));
 			gameObject.GetComponent<Player> ().LowerDrag ();
 			jumpRight = false;
-		} else if (m_DoubleJump) {
+		} else if (m_DoubleJump && CanDoubleJump) {
 			rigidBody.velocity = new Vector3(rigidBody.velocity.x,0,0);
 			rigidBody.AddForce (new Vector2 (0f, jumpForce));
 			m_DoubleJump = false;
