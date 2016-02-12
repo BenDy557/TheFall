@@ -137,12 +137,12 @@ public class CharacterController : MonoBehaviour {
 		} else if (jumpLeft) {
 			//anim.SetTrigger("Jump");
 			rigidBody.AddForce (new Vector2 (-200f, jumpForce));
-			gameObject.GetComponent<Player> ().LowerDrag ();
+			gameObject.GetComponent<Player> ().lowerDrag ();
 			jumpLeft = false;
 		} else if (jumpRight) {
 			//anim.SetTrigger("Jump");
 			rigidBody.AddForce (new Vector2 (200f, jumpForce));
-			gameObject.GetComponent<Player> ().LowerDrag ();
+			gameObject.GetComponent<Player> ().lowerDrag ();
 			jumpRight = false;
 		} else if (m_DoubleJump && CanDoubleJump) {
 			rigidBody.velocity = new Vector3(rigidBody.velocity.x,0,0);
