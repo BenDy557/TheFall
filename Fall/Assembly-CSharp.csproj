@@ -54,9 +54,11 @@
      <Compile Include="Assets\Scripts\Character\PlayerManager.cs" />
      <Compile Include="Assets\Scripts\Character\RespawnManager.cs" />
      <Compile Include="Assets\Scripts\Character\Reticule.cs" />
+     <Compile Include="Assets\Scripts\Character\TextPos.cs" />
      <Compile Include="Assets\Scripts\Character\WallDrag.cs" />
      <Compile Include="Assets\Scripts\Character\bullet.cs" />
      <Compile Include="Assets\Scripts\Character\groundCheck.cs" />
+     <Compile Include="Assets\Scripts\Character\timer.cs" />
      <Compile Include="Assets\Scripts\Generation\EndTrigger.cs" />
      <Compile Include="Assets\Scripts\Generation\GenerateLevel.cs" />
      <Compile Include="Assets\Scripts\Generation\PrefabScript.cs" />
@@ -65,7 +67,10 @@
      <Compile Include="Assets\Scripts\Pickups\PlayerAbility.cs" />
      <Compile Include="Assets\Scripts\Terrain\Cube.cs" />
      <Compile Include="Assets\Scripts\Terrain\Hazard.cs" />
+     <Compile Include="Assets\Scripts\Terrain\MovingBlock.cs" />
      <Compile Include="Assets\Scripts\Terrain\Rotate.cs" />
+     <None Include="Assets\Fonts\cyberfall\Font License.txt" />
+     <None Include="Assets\Fonts\sansation\SIL Open Font License.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
