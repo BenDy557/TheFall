@@ -69,6 +69,7 @@
      <Compile Include="Assets\Scripts\Terrain\Cube.cs" />
      <Compile Include="Assets\Scripts\Terrain\Hazard.cs" />
      <Compile Include="Assets\Scripts\Terrain\Laser.cs" />
+     <Compile Include="Assets\Scripts\Terrain\MovingBlock.cs" />
      <Compile Include="Assets\Scripts\Terrain\Rotate.cs" />
      <None Include="Assets\Fonts\cyberfall\Font License.txt" />
      <None Include="Assets\Fonts\sansation\SIL Open Font License.txt" />

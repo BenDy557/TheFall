@@ -35,6 +35,7 @@ public class RespawnManager : MonoBehaviour {
 						Player.GetComponent<Rigidbody> ().velocity = new Vector3 (0, 0, 0);
 						Player.transform.position = obj.transform.position;
 						RespawnSuceeded = true;
+					Destroy (obj);
 				}
 				else 
 				{
