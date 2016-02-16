@@ -10,7 +10,7 @@ public class PickupSpawn : MonoBehaviour {
 	void Start () {
 
         float tempProbability = Random.Range(0.0f, 1.0f);
-        Debug.Log(tempProbability);
+
         if (tempProbability < m_Probability)
         {
             Instantiate(m_Pickup, transform.position, new Quaternion());

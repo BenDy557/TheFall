@@ -26,7 +26,7 @@ public class CharacterFire : MonoBehaviour {
 			GameObject newBullet = (GameObject)Instantiate(bullet,transform.position,Quaternion.identity);
 			newBullet.GetComponent<bullet>().SetParentPlayer(gameObject);
 			newBullet.transform.LookAt(offsetReticule);
-			Debug.Log(offsetReticule);
+			
 		}
 		if (h <= 0.1 && fired == true) {
 			fired = false;

@@ -39,7 +39,6 @@ public class Laser : MonoBehaviour {
         {
             //if(hit.transform.gameObject.CompareTag("Ground")
             {
-                Debug.Log("rayhit");
                 Vector3 laserDifference = transform.position - hit.point;
                 Debug.DrawRay(m_LaserTrajectory.origin, m_LaserTrajectory.direction * Vector3.Distance(hit.point, m_LaserTrajectory.origin), Color.red);
 
