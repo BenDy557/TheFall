@@ -31,6 +31,18 @@ public class bullet : MonoBehaviour {
 			Debug.Log("start:"+transform.forward+". End:"+ transform.position);
 			Destroy(gameObject);
 		}
+		if (other.tag == "Pendulum") {
+			if (other.gameObject.GetComponent<Rigidbody>().useGravity==false){
+				other.gameObject.GetComponent<Rigidbody>().useGravity = true;
+				Destroy (gameObject);
+			}
+			else{
+				other.gameObject.GetComponent<Rigidbody>().AddForce (transform.forward*pushForce);
+				Destroy (gameObject);
+			}
+
+		}
+
 	}
 
 	public void SetParentPlayer(GameObject parent)

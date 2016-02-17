@@ -13,7 +13,6 @@ public class CharacterController : MonoBehaviour {
 	public PlayerState m_PlayerState;
 	public string name;
 	public float moveForce = 100;
-	public float maxSpeed = 5f;
 	public float jumpForce = 1000f;
 	public Transform groundCheck;
 	public Transform leftGrabCheck;
@@ -27,6 +26,7 @@ public class CharacterController : MonoBehaviour {
 	public bool grabbingRight = false;
 	public Animator anim;
 	public GameObject Model;
+	private float maxSpeed = 100f;
 	private Rigidbody rigidBody;
 	private bool m_DoubleJump = false;
 	private bool m_DoubleJumpAvailable = true;
