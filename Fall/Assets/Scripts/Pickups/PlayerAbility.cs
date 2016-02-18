@@ -7,6 +7,7 @@ public class PlayerAbility : MonoBehaviour {
 
     private string m_PlayerNumber;
 
+	[SerializeField] private float m_DoubleJumpDuration = 5.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -43,6 +44,9 @@ public class PlayerAbility : MonoBehaviour {
             case PickupType.rotate:
                 RotateAll();
                 break;
+			case PickupType.doubleJump:
+				EnableDoubleJump(m_DoubleJumpDuration);
+				break;
             default:
                 Debug.Log("NOTHING");
                 break;
@@ -59,4 +63,10 @@ public class PlayerAbility : MonoBehaviour {
         }
         m_Type = PickupType.empty;
     }
+
+	void EnableDoubleJump(float time)
+	{
+		gameObject.GetComponent<CharacterController>().EnableDoubleJump(time);
+		m_Type = PickupType.empty;
+	}
 }

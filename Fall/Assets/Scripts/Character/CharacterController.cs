@@ -210,5 +210,16 @@ public class CharacterController : MonoBehaviour {
 	{
 		rigidBody.AddForce(new Vector2(Mathf.Sign(-dir)*shuntForce,shuntForce));
 	}
+
+	public void EnableDoubleJump(float time)
+	{
+		StartCoroutine(DoubleJumpEnable(time));
+	}
+	IEnumerator DoubleJumpEnable(float time)
+	{
+		CanDoubleJump = true;
+		yield return new WaitForSeconds(time);
+		CanDoubleJump = false;
+	}
 }
 
