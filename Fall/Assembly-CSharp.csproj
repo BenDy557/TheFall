@@ -72,6 +72,7 @@
      <Compile Include="Assets\Scripts\Terrain\Laser.cs" />
      <Compile Include="Assets\Scripts\Terrain\MovingBlock.cs" />
      <Compile Include="Assets\Scripts\Terrain\Rotate.cs" />
+     <Compile Include="Assets\Scripts\Terrain\RotateConstant.cs" />
      <None Include="Assets\Fonts\cyberfall\Font License.txt" />
      <None Include="Assets\Fonts\sansation\SIL Open Font License.txt" />
  <Reference Include="UnityEngine.UI">
