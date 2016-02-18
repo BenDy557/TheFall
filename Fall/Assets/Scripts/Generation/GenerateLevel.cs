@@ -59,13 +59,16 @@ public class GenerateLevel : MonoBehaviour {
 	void SpawnPickups()
 	{
 		GameObject[] pickupTransforms = GameObject.FindGameObjectsWithTag ("PickupSpawn");
-		float tempProbability = Random.Range(0.0f, 1.0f);
-		if (tempProbability < m_Probability)
-		{
-			foreach (GameObject trans in pickupTransforms) {
+	
+
+		foreach (GameObject trans in pickupTransforms) {
+			float tempProbability = Random.Range(0.0f, 1.0f);
+			if (tempProbability < m_Probability && !trans.GetComponent<PickupSpawn>().m_HasSpawned)
+			{
 				Instantiate(m_Pickup[Random.Range (0,m_Pickup.Length)], trans.transform.position, new Quaternion());
-				Destroy(trans);
+				trans.GetComponent<PickupSpawn>().HasSpawned();
 			}
+			Destroy(trans);
 		}
 
 	}
