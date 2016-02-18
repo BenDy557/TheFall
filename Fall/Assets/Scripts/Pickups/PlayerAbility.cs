@@ -39,6 +39,7 @@ public class PlayerAbility : MonoBehaviour {
                 break;
             case PickupType.phaseBlock:
                 Debug.Log("Phase");
+                EmpowerBullet();
                 break;
             case PickupType.rotate:
                 RotateAll();
@@ -59,4 +60,12 @@ public class PlayerAbility : MonoBehaviour {
         }
         m_Type = PickupType.empty;
     }
+
+    void EmpowerBullet()
+    {
+        gameObject.GetComponent<CharacterFire>().empowered = true;
+        m_Type = PickupType.empty;
+    }
+
+
 }
