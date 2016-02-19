@@ -1,10 +1,20 @@
 fileFormatVersion: 2
 guid: c45e20e072026ca448da005e3d11ef1e
-timeCreated: 1452598685
+timeCreated: 1455907601
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - groundCheck: {instanceID: 0}
+  - leftGrabCheck: {instanceID: 0}
+  - rightGrabCheck: {instanceID: 0}
+  - m_AudioSource: {instanceID: 0}
+  - m_AudioClipLand: {fileID: 8300000, guid: 4d05e548e5c79a34ea8d757584a48676, type: 3}
+  - m_AudioClipShoot: {fileID: 8300000, guid: beecc85e4fd194d4da247ffe8d1ea0f4, type: 3}
+  - m_AudioClipDeath: {fileID: 8300000, guid: 86d76ac525ce35f4abcace92b0a85ce7, type: 3}
+  - m_AudioClipJump: {fileID: 8300000, guid: 9be688e5041e30e4ba26781df6bed6d2, type: 3}
+  - anim: {instanceID: 0}
+  - Model: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
