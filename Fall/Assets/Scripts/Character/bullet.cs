@@ -34,6 +34,7 @@ public class bullet : MonoBehaviour {
 		if (other.tag == "Pendulum") {
 			if (other.gameObject.GetComponentInParent<Rigidbody>().useGravity==false){
 				other.gameObject.GetComponentInParent<Rigidbody>().useGravity = true;
+				other.gameObject.GetComponentInParent<Rigidbody>().isKinematic = false;
 				if(transform.forward.y>0){
 					other.gameObject.GetComponentInParent<Rigidbody>().AddForce (new Vector3(0,1000,0));}
 				Destroy (gameObject);
