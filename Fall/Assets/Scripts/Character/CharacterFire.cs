@@ -10,12 +10,18 @@ public class CharacterFire : MonoBehaviour {
 	public GameObject reticule;
 	Vector3 offsetReticule;
 
+    [HideInInspector] public AudioSource m_AudioSource;
+    public AudioClip m_AudioClipFire;
+
     public bool empowered;
 
 	// Use this for initialization
 	void Start () {
 		offsetReticule = reticule.transform.position;
 		offsetReticule.z = 0;
+
+
+        m_AudioSource = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -42,6 +48,9 @@ public class CharacterFire : MonoBehaviour {
 
 			
 			newBullet.transform.LookAt(offsetReticule);
+
+
+            m_AudioSource.PlayOneShot(m_AudioClipFire);
 			
 		}
 		if (h <= 0.1 && fired == true) {
