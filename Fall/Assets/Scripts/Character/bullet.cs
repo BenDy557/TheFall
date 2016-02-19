@@ -5,7 +5,7 @@ public class bullet : MonoBehaviour {
 
 	public float speed = 10.0f;
 	public float range = 20.0f;
-	public float pushForce = 3000.0f;
+	public float pushForce = 500.0f;
 	private GameObject parentPlayer;
 	// Use this for initialization
 	void Start () {
@@ -32,12 +32,14 @@ public class bullet : MonoBehaviour {
 			Destroy(gameObject);
 		}
 		if (other.tag == "Pendulum") {
-			if (other.gameObject.GetComponent<Rigidbody>().useGravity==false){
-				other.gameObject.GetComponent<Rigidbody>().useGravity = true;
+			if (other.gameObject.GetComponentInParent<Rigidbody>().useGravity==false){
+				other.gameObject.GetComponentInParent<Rigidbody>().useGravity = true;
+				if(transform.forward.y>0){
+					other.gameObject.GetComponentInParent<Rigidbody>().AddForce (new Vector3(0,1000,0));}
 				Destroy (gameObject);
 			}
 			else{
-				other.gameObject.GetComponent<Rigidbody>().AddForce (transform.forward*pushForce);
+				other.gameObject.GetComponentInParent<Rigidbody>().AddForce (transform.forward*pushForce);
 				Destroy (gameObject);
 			}
 

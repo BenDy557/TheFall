@@ -18,13 +18,13 @@ public class PendulumHammer : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		pendulumVel = gameObject.GetComponent<Rigidbody> ().velocity;
+		pendulumVel = gameObject.GetComponentInParent<Rigidbody> ().velocity;
 		if (other.tag == "Player") {
 			playerPos = other.transform.position;
 			toPlayer = (playerPos - gameObject.transform.position);
 			if (Vector3.Dot(pendulumVel, toPlayer)>0)
 			{
-				other.GetComponent<Rigidbody>().AddForce(pendulumVel*hammerForce);
+				other.GetComponentInParent<Rigidbody>().AddForce(pendulumVel*hammerForce);
 			}
 
 		}
