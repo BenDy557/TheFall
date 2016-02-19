@@ -23,6 +23,7 @@ public class DestructoShot : MonoBehaviour {
 		if (other.tag == "Ground" && other.gameObject.GetComponent<DestructoShotEffect>())
         {
             other.GetComponent<DestructoShotEffect>().Enable();
+			Destroy(gameObject);
         }
 
 
