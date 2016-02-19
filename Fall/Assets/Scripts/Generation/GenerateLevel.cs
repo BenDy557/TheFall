@@ -8,6 +8,8 @@ public class GenerateLevel : MonoBehaviour {
 	float m_NeededItterations = 3;
 	public GameObject[] m_LevelPrefabs;
 	Transform m_CurrentFocus;
+	public GameObject[] m_Pickup;
+	public float m_Probability = 0.5f;
 	// Use this for initialization
 	void Start () {
 		SpawnFloor ();
@@ -45,11 +47,26 @@ public class GenerateLevel : MonoBehaviour {
 		m_CurrentFocus.position = new Vector3 (m_CurrentFocus.transform.position.x,
 		                                       SpawnedObject.GetComponent<PrefabScript> ().UpperLimit.transform.position.y + SpawnedObject.GetComponent<PrefabScript> ().UpperLimit.transform.localScale.y,
 		                              m_CurrentFocus.transform.position.z);
+		SpawnPickups ();
 		m_NeededItterations --;
 	}
 
 	public void NeedItteration(int numberNeeded)
 	{
 		m_NeededItterations+= numberNeeded;
+	}
+
+	void SpawnPickups()
+	{
+		GameObject[] pickupTransforms = GameObject.FindGameObjectsWithTag ("PickupSpawn");
+		float tempProbability = Random.Range(0.0f, 1.0f);
+		if (tempProbability < m_Probability)
+		{
+			foreach (GameObject trans in pickupTransforms) {
+				Instantiate(m_Pickup[Random.Range (0,m_Pickup.Length)], trans.transform.position, new Quaternion());
+				Destroy(trans);
+			}
+		}
+
 	}
 }

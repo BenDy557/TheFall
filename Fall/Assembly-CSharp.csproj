@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\Camera\LeaderCamera.cs" />
      <Compile Include="Assets\Scripts\Character\CharacterController.cs" />
      <Compile Include="Assets\Scripts\Character\CharacterFire.cs" />
+     <Compile Include="Assets\Scripts\Character\DestructoShot.cs" />
      <Compile Include="Assets\Scripts\Character\MoveCamera.cs" />
      <Compile Include="Assets\Scripts\Character\Player.cs" />
      <Compile Include="Assets\Scripts\Character\PlayerManager.cs" />
@@ -68,10 +69,12 @@
      <Compile Include="Assets\Scripts\Pickups\PlayerAbility.cs" />
      <Compile Include="Assets\Scripts\Terrain\CircularMovingBlock.cs" />
      <Compile Include="Assets\Scripts\Terrain\Cube.cs" />
+     <Compile Include="Assets\Scripts\Terrain\DestructoShotEffect.cs" />
      <Compile Include="Assets\Scripts\Terrain\Hazard.cs" />
      <Compile Include="Assets\Scripts\Terrain\Laser.cs" />
      <Compile Include="Assets\Scripts\Terrain\MovingBlock.cs" />
      <Compile Include="Assets\Scripts\Terrain\Rotate.cs" />
+     <Compile Include="Assets\Scripts\Terrain\RotateConstant.cs" />
      <None Include="Assets\Fonts\cyberfall\Font License.txt" />
      <None Include="Assets\Fonts\sansation\SIL Open Font License.txt" />
  <Reference Include="UnityEngine.UI">

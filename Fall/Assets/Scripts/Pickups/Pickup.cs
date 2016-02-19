@@ -31,4 +31,4 @@ public class Pickup : MonoBehaviour
 	}
 }
 
-public enum PickupType { empty, rotate, invertControls, leaderSwap, phaseBlock };
+public enum PickupType { empty, rotate, invertControls, leaderSwap, phaseBlock, doubleJump };
