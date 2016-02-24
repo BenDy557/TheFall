@@ -23,7 +23,7 @@ public class timer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
+        
 
 		players = GameObject.FindGameObjectsWithTag ("Player");
 

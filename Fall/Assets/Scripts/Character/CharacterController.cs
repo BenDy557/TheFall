@@ -184,7 +184,7 @@ public class CharacterController : MonoBehaviour {
         if (jump || jumpLeft || jumpRight || (m_DoubleJump && CanDoubleJump))
         {
             m_AudioSource.PlayOneShot(m_AudioClipJump);
-            Debug.Log("jumpSound");
+            //Debug.Log("jumpSound");
         }
 
 
