@@ -48,6 +48,9 @@ public class PlayerAbility : MonoBehaviour {
 			case PickupType.doubleJump:
 				EnableDoubleJump(m_DoubleJumpDuration);
 				break;
+			case PickupType.timeSlow:
+				EnableTimeSlow(m_DoubleJumpDuration);
+				break;
             default:
                 Debug.Log("NOTHING");
                 break;
@@ -78,6 +81,11 @@ public class PlayerAbility : MonoBehaviour {
         m_Type = PickupType.empty;
     }
 
+	void EnableTimeSlow(float time)
+	{
+		gameObject.GetComponent<CharacterController>().EnableTimeSlow(time);
+		m_Type = PickupType.empty;
+	}
 
 
 }

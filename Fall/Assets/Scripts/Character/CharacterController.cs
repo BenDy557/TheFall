@@ -20,6 +20,7 @@ public class CharacterController : MonoBehaviour {
 	public Transform rightGrabCheck;
 	public float shuntForce = 2000.0f;
 	public bool CanDoubleJump = false;
+	private float timeScaler = 1.0f;
 	public float height;
 	
 	public bool grounded = false;
@@ -280,6 +281,20 @@ public class CharacterController : MonoBehaviour {
 		CanDoubleJump = true;
 		yield return new WaitForSeconds(time);
 		CanDoubleJump = false;
+	}
+
+	public void EnableTimeSlow(float time)
+	{
+		StartCoroutine(TimeSlow(time));
+	}
+
+	IEnumerator TimeSlow(float time)
+	{
+		timeScaler = 0.5f;
+		Time.timeScale = 0.5f;
+		yield return new WaitForSeconds (time);
+		timeScaler = 1.0f;
+		Time.timeScale = 1.0f;
 	}
 }
 
