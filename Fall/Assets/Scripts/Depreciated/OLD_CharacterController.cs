@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
 public enum PlayerState {Idle,Running,Jumping,WallGrabLeft,WallGrabRight};
 
 public class CharacterController : MonoBehaviour {
@@ -13,7 +14,6 @@ public class CharacterController : MonoBehaviour {
 	public PlayerState m_PlayerState;
     
 	public string name;
-    public int m_PlayerNumber;
 	public float moveForce = 100;
 	public float jumpForce = 1000f;
 	public Transform groundCheck;
@@ -47,53 +47,15 @@ public class CharacterController : MonoBehaviour {
 	private bool m_DoubleJump = false;
 	private bool m_DoubleJumpAvailable = true;
 	// Use this for initialization
-    void Awake()
-    {
-        
-        
-    }
-    
-    void Start()
-    {
-        switch (m_PlayerNumber)
-        {
-            case 1:
-                name = "Player1";
-                GetComponent<MeshColour>().ColourizeMesh(MeshColour.PlayerColour.Red);
-                break;
-            case 2:
-                name = "Player2";
-                GetComponent<MeshColour>().ColourizeMesh(MeshColour.PlayerColour.Blue);
-                break;
-            case 3:
-                name = "Player3";
-                GetComponent<MeshColour>().ColourizeMesh(MeshColour.PlayerColour.Green);
-                break;
-            case 4:
-                name = "Player4";
-                GetComponent<MeshColour>().ColourizeMesh(MeshColour.PlayerColour.Yellow);
-                break;
-            default:
-                name = "InvalidPlayerNumber";
-                break;
-        }
-
-        Debug.Log("PlayerNumber" + m_PlayerNumber);
-        Debug.Log("PlayerName CharacterController" + name);
-
-
-        anim = Model.GetComponent<Animator>();
+	void Awake () 
+	{
+		anim = Model.GetComponent<Animator>();
         m_AudioSource = gameObject.AddComponent<AudioSource>();
-
-        rigidBody = GetComponent<Rigidbody>();
-        height = GetComponent<CapsuleCollider>().height * transform.localScale.y;
-        m_PlayerState = PlayerState.Idle;
-
         
-
-    }
-
-	
+		rigidBody = GetComponent<Rigidbody>();
+		height = GetComponent<CapsuleCollider> ().height *transform.localScale.y;
+		m_PlayerState = PlayerState.Idle;
+	}
 	
 	// Update is called once per frame
 	void Update () 
@@ -322,3 +284,4 @@ public class CharacterController : MonoBehaviour {
 	}
 }
 
+*/

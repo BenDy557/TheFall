@@ -4,6 +4,12 @@ using System.Collections;
 public class Reticule : MonoBehaviour {
 	public string name;
 	// Update is called once per frame
+    void Start()
+    {
+        name =  transform.parent.gameObject.GetComponent<CharacterController>().name;
+        Debug.Log("PlayerName CharacterReticule" + name);
+    }
+
 	void Update ()
 	{
 		// We are going to read the input every frame

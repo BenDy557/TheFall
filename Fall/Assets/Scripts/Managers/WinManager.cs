@@ -17,7 +17,7 @@ public class WinManager : MonoBehaviour {
 	{
 		Debug.Log (WinnerName + " won!");
 
-		Application.LoadLevel(0);
+		Application.LoadLevel("Lobby");
 		
 	}
 }

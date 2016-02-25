@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\Character\CharacterFire.cs" />
      <Compile Include="Assets\Scripts\Character\DeathEffect.cs" />
      <Compile Include="Assets\Scripts\Character\DestructoShot.cs" />
+     <Compile Include="Assets\Scripts\Character\MeshColour.cs" />
      <Compile Include="Assets\Scripts\Character\MoveCamera.cs" />
      <Compile Include="Assets\Scripts\Character\Player.cs" />
      <Compile Include="Assets\Scripts\Character\PlayerManager.cs" />
@@ -61,6 +62,7 @@
      <Compile Include="Assets\Scripts\Character\bullet.cs" />
      <Compile Include="Assets\Scripts\Character\groundCheck.cs" />
      <Compile Include="Assets\Scripts\Character\timer.cs" />
+     <Compile Include="Assets\Scripts\Depreciated\OLD_CharacterController.cs" />
      <Compile Include="Assets\Scripts\Generation\EndTrigger.cs" />
      <Compile Include="Assets\Scripts\Generation\GenerateLevel.cs" />
      <Compile Include="Assets\Scripts\Generation\PrefabScript.cs" />

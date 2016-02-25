@@ -4,7 +4,7 @@ using System.Collections;
 public class CharacterFire : MonoBehaviour {
 
 	private bool fired = false;
-	public string m_CharacterName;
+	private string m_CharacterName;
 	public GameObject bullet;
     public GameObject destructoShot;
 	public GameObject reticule;
@@ -16,14 +16,21 @@ public class CharacterFire : MonoBehaviour {
     public bool empowered;
 
 	// Use this for initialization
-	void Start () {
-		offsetReticule = reticule.transform.position;
-		offsetReticule.z = 0;
-
-
+	void Awake()
+    {
+        offsetReticule = reticule.transform.position;
+        offsetReticule.z = 0;
+        
+    }
+    
+    void Start () 
+    {
         m_AudioSource = GetComponent<AudioSource>();
+		m_CharacterName = gameObject.GetComponent<CharacterController>().name;
+        Debug.Log("PlayerName CharacterFire" + name);
 	}
-	
+
+    
 	// Update is called once per frame
 	void Update () {
 		float h = Input.GetAxis(m_CharacterName+"Fire");
