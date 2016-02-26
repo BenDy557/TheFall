@@ -45,7 +45,11 @@ public class bullet : MonoBehaviour {
 			}
 
 		}
-
+		if (other.tag == "Bucket") {
+			float dir = gameObject.transform.position.x - other.transform.position.x;
+			other.gameObject.GetComponentInParent<Rotate> ().MakeRotate (dir);
+			Destroy (gameObject);
+		}
 	}
 
 	public void SetParentPlayer(GameObject parent)

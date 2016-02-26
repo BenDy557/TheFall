@@ -7,6 +7,7 @@ public class Rotate : MonoBehaviour {
 	public float degPerSec = 40;
 	bool rotateBool = false;
 	bool highDrag = false;
+	float totalspin;
 	List<GameObject> Children;
 	void Start () {
 		Children = new List<GameObject> ();
@@ -34,12 +35,14 @@ public class Rotate : MonoBehaviour {
 		}
 
 		rotateBool = true;
+		if (gameObject.tag == "Bucket") {totalspin = 180;}
+		else {totalspin = 90;}
 		float rotSoFar = 0;
-		while (rotSoFar < 90) {
+		while (rotSoFar < totalspin) {
 			float rotDef = degPerSec * Time.deltaTime;
-			if (rotSoFar+rotDef >90)
+			if (rotSoFar+rotDef >totalspin)
 			{
-				rotDef = 90 - rotSoFar;
+				rotDef = totalspin - rotSoFar;
 			}
 			transform.Rotate (0, 0, Mathf.Sign(dir)*rotDef);
 			rotSoFar += rotDef;
