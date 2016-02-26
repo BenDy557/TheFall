@@ -20,6 +20,19 @@ public class Rotate : MonoBehaviour {
 		}*/
 	}
 
+	public Rotate(Rotate other)
+	{
+		if (other) {
+			degPerSec = other.degPerSec;
+		}
+	}
+
+	public void CopyRotate(Rotate other)
+	{
+		if (other) {
+			degPerSec = other.degPerSec;
+		}
+	}
 	public void MakeRotate(float dir)
 	{
 		if(rotateBool == false)
