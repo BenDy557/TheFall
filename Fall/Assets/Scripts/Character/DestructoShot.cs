@@ -31,8 +31,8 @@ public class DestructoShot : MonoBehaviour {
         {
 			Vector3 pushVector = other.gameObject.transform.position - transform.position;
 			other.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward*pushForce);
-			Debug.DrawLine(transform.position,other.gameObject.transform.position,Color.red,10.0f);
-			Debug.Log("start:"+transform.forward+". End:"+ transform.position);
+			//Debug.DrawLine(transform.position,other.gameObject.transform.position,Color.red,10.0f);
+			//Debug.Log("start:"+transform.forward+". End:"+ transform.position);
 			Destroy(gameObject);
 		}
 	}
