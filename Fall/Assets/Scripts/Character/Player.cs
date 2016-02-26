@@ -11,8 +11,7 @@ public class Player : MonoBehaviour {
 	private RespawnManager m_RespawnManager;
 	// Use this for initialization
 	void Start () {
-		m_RespawnManager = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<RespawnManager> ();
-       
+		m_RespawnManager = GameObject.FindGameObjectWithTag ("RespawnManager").GetComponent<RespawnManager>();
 	}
 	
 	// Update is called once per frame

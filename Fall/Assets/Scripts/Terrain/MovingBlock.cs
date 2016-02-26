@@ -19,7 +19,20 @@ public class MovingBlock : MonoBehaviour {
 		goingorcoming = true;
 		journeyLength = Vector3.Distance (startPos.position, endPos.position);
 	}
-	
+
+	MovingBlock(MovingBlock other)
+	{
+		blockspeed = other.blockspeed;
+		startPos = other.startPos;
+		endPos = other.endPos;
+	}
+
+	public void CopyMovingBlock(MovingBlock other)
+	{
+		blockspeed = other.blockspeed;
+		startPos = other.startPos;
+		endPos = other.endPos;
+	}
 	// Update is called once per frame
 	void Update () {
 

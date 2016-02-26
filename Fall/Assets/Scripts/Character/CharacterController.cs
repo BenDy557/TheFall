@@ -13,6 +13,7 @@ public class CharacterController : MonoBehaviour {
 	public PlayerState m_PlayerState;
     
 	public string name;
+    public int m_PlayerNumber;
 	public float moveForce = 100;
 	public float jumpForce = 1000f;
 	public Transform groundCheck;
@@ -47,19 +48,58 @@ public class CharacterController : MonoBehaviour {
 	private bool m_DoubleJump = false;
 	private bool m_DoubleJumpAvailable = true;
 	// Use this for initialization
-	void Awake () 
-	{
-		anim = Model.GetComponent<Animator>();
-        m_AudioSource = gameObject.AddComponent<AudioSource>();
+    void Awake()
+    {
         
-		rigidBody = GetComponent<Rigidbody>();
-		height = GetComponent<CapsuleCollider> ().height *transform.localScale.y;
-		m_PlayerState = PlayerState.Idle;
-	}
+        
+    }
+    
+    void Start()
+    {
+        switch (m_PlayerNumber)
+        {
+            case 1:
+                name = "Player1";
+                GetComponent<MeshColour>().ColourizeMesh(MeshColour.PlayerColour.Red);
+                break;
+            case 2:
+                name = "Player2";
+                GetComponent<MeshColour>().ColourizeMesh(MeshColour.PlayerColour.Blue);
+                break;
+            case 3:
+                name = "Player3";
+                GetComponent<MeshColour>().ColourizeMesh(MeshColour.PlayerColour.Green);
+                break;
+            case 4:
+                name = "Player4";
+                GetComponent<MeshColour>().ColourizeMesh(MeshColour.PlayerColour.Yellow);
+                break;
+            default:
+                name = "InvalidPlayerNumber";
+                break;
+        }
+
+        Debug.Log("PlayerNumber" + m_PlayerNumber);
+        Debug.Log("PlayerName CharacterController" + name);
+
+
+        anim = Model.GetComponent<Animator>();
+        m_AudioSource = gameObject.AddComponent<AudioSource>();
+
+        rigidBody = GetComponent<Rigidbody>();
+        height = GetComponent<CapsuleCollider>().height * transform.localScale.y;
+        m_PlayerState = PlayerState.Idle;
+
+        
+
+    }
+
+	
 	
 	// Update is called once per frame
 	void Update () 
 	{
+		gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         groundedPrev = grounded;
         grabbingLeftPrev = grabbingLeft;
 		grabbingRightPrev = grabbingRight;
@@ -148,7 +188,7 @@ public class CharacterController : MonoBehaviour {
                 m_AudioSource.PlayOneShot(m_AudioClipLand);
             }
         }
-	
+		gameObject.layer = LayerMask.NameToLayer("Ground");
 	}
 	
 	void FixedUpdate()
@@ -175,8 +215,10 @@ public class CharacterController : MonoBehaviour {
 
 		if (h > 0 && !facingRight) {
 			Flip ();
+			rigidBody.velocity = new Vector2 (0, rigidBody.velocity.y);
 		} else if (h < 0 && facingRight) {
 			Flip ();
+			rigidBody.velocity = new Vector2 (0, rigidBody.velocity.y);
 		}
 
 
@@ -185,7 +227,7 @@ public class CharacterController : MonoBehaviour {
         if (jump || jumpLeft || jumpRight || (m_DoubleJump && CanDoubleJump))
         {
             m_AudioSource.PlayOneShot(m_AudioClipJump);
-            Debug.Log("jumpSound");
+            //Debug.Log("jumpSound");
         }
 
 

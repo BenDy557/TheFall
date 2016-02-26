@@ -39,7 +39,7 @@ public class PlayerAbility : MonoBehaviour {
                 Debug.Log("Swap");
                 break;
             case PickupType.phaseBlock:
-                Debug.Log("Phase");
+                //Debug.Log("Phase");
                 EmpowerBullet();
                 break;
             case PickupType.rotate:
