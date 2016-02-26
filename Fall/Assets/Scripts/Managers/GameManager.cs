@@ -272,7 +272,7 @@ public class GameManager : MonoBehaviour {
 
 
                                     tempGameObject.transform.position = m_LevelGenerator.GetComponent<GenerateLevel>().m_StartPoint.transform.position;
-                                    tempGameObject.transform.position = tempGameObject.transform.position + new Vector3(-10.0f + (5.0f * i), tempGameObject.transform.position.y, tempGameObject.transform.position.z);
+                                    tempGameObject.transform.position = tempGameObject.transform.position + new Vector3(-7.0f + (5.0f * i), tempGameObject.transform.position.y -2.0f, tempGameObject.transform.position.z);
                                     m_Players.Add(tempGameObject);
                                 }
                             }
