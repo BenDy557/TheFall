@@ -18,15 +18,14 @@ public class LeaderCamera : MonoBehaviour
 	{
 		rb = GetComponent<Rigidbody>();
 	}
-	
-	
-	// Update is called once per frame
-	void FixedUpdate () 
-	{
-		Vector3 movement = new Vector3 (0.0f, 1.0f, 0.0f);								//camera movement defaults to "speed"
-		screenHeight = 2*Mathf.Atan (Mathf.Deg2Rad * Camera.main.fieldOfView/2);		//calculates screen height from field of view 
-		
-		players = GameObject.FindGameObjectsWithTag("Player");							//creates array of game objects and fills it with objects tagged "Player"
+
+    void Update()
+    {
+        Vector3 movement = new Vector3(0.0f, 1.0f, 0.0f);								//camera movement defaults to "speed"
+        screenHeight = 2 * Mathf.Atan(Mathf.Deg2Rad * Camera.main.fieldOfView / 2);		//calculates screen height from field of view 
+
+        players = new GameObject[0];
+        players = GameObject.FindGameObjectsWithTag("Player");							//creates array of game objects and fills it with objects tagged "Player"
         if (players.Length == 0)
         {
             Debug.Log("No game objects found with tag Player");
@@ -55,6 +54,12 @@ public class LeaderCamera : MonoBehaviour
 
             rb.velocity = (movement * speed);
         }
+    }
+	
+	// Update is called once per frame
+	void FixedUpdate () 
+	{
+		
 	}
 }
 

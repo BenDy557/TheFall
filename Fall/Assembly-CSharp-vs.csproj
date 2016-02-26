@@ -68,6 +68,7 @@
      <Compile Include="Assets\Scripts\Generation\PrefabScript.cs" />
      <Compile Include="Assets\Scripts\Lobby\PlayerLobbyMenu.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\ManagerCheck.cs" />
      <Compile Include="Assets\Scripts\Managers\WinManager.cs" />
      <Compile Include="Assets\Scripts\Pickups\Pickup.cs" />
      <Compile Include="Assets\Scripts\Pickups\PickupSpawn.cs" />

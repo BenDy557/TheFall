@@ -6,7 +6,8 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
-    enum GameState { SplashScreen, Lobby, Game };
+    public enum GameState { SplashScreen, Lobby, Game };
+    public GameState m_GameStateStart;
     private GameState m_GameState;
     private GameState m_GameStatePrev;
     private bool m_Transitioning;
@@ -27,13 +28,14 @@ public class GameManager : MonoBehaviour {
     //Game
     private List<GameObject> m_Players = new List<GameObject>();
     [SerializeField] private GameObject m_LevelGenerator;
+    bool m_GameFinished;
 
 	// Use this for initialization
 	void Start ()
     {
         //Scene loading stuff
         DontDestroyOnLoad(gameObject);
-        m_GameState = GameState.SplashScreen;//TODO//get current scene to set this
+        m_GameState = m_GameStateStart;//TODO//get current scene to set this
         
         
         //How many controllers are connected?
@@ -53,6 +55,7 @@ public class GameManager : MonoBehaviour {
         m_PlayersReady[3] = false;
 
         //Game
+        m_GameFinished = false;
         //if player wants to join add to game list
         //if player joined, instantiate play area for player
         //wait until players ready up
@@ -62,20 +65,23 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
+        Debug.Log("GameFinished"+m_GameFinished);
         
         if (TransitionState())
         {
+            Debug.Log("NOTTransitioning");
             m_GameStatePrev = m_GameState;
 
             switch (m_GameState)
             {
+                //SPLASH/////////////////////////////////////////////////
+                /////////////////////////////////////////////////SPLASH//
                 case GameState.SplashScreen:
 
                     //listen for all input, if A/X button pressed, exit splash screen
                     if (Input.GetKeyDown(KeyCode.Return))
                     {
                         //Load Lobby scene
-                        Debug.Log("Loading Lobby");
                         m_GameState = GameState.Lobby;
                         Application.LoadLevel("Lobby");
                     }
@@ -84,9 +90,10 @@ public class GameManager : MonoBehaviour {
 
                     break;
 
+                //LOBBY//////////////////////////////////////////////////
+                //////////////////////////////////////////////////LOBBY//
                 case GameState.Lobby:
 
-                    
                     bool tempAllPlayersReady = false;
                     if (m_PlayersSet[0] || m_PlayersSet[1] || m_PlayersSet[2] || m_PlayersSet[3])
                     {
@@ -107,22 +114,15 @@ public class GameManager : MonoBehaviour {
                     if (tempAllPlayersReady)
                     {
                         //load game with amout of players
-                        Debug.Log("Loading Game");
 
                         m_GameState = GameState.Game;
                         Application.LoadLevel("GameManagerLevel");
                     }
 
-                    Debug.Log("Players ready? " + tempAllPlayersReady);
-
-
-
                     //listen for all input to see if player wants to join game
-
                     if (Input.GetButtonDown("Player1Jump"))//|| (Input.GetAxis("PlaystationPlayer1ButtonX") > 0))
                     {
                         //Log player as wanting to join game
-                        Debug.Log("button pressed");
                         if (m_PlayersSet[0])
                         {
                             m_PlayersReady[0] = true;
@@ -130,7 +130,6 @@ public class GameManager : MonoBehaviour {
                         }
                         
                         m_PlayersSet[0] = true;
-
 
                         //CreatePlayer1
                         /*
@@ -147,8 +146,6 @@ public class GameManager : MonoBehaviour {
                                 i = 4;
                             }
                         }
-                        
-                        
 
                         GameObject tempGameObjectPlayer = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Lobby/PlayerLobby"));
                         tempGameObjectPlayer.GetComponent<CharacterController>().name = "Player1";
@@ -164,7 +161,6 @@ public class GameManager : MonoBehaviour {
                     if (Input.GetButtonDown("Player2Jump")) //|| (Input.GetAxis("PlaystationPlayer2ButtonX") > 0))
                     {
                         //CreatePlayer2
-                        Debug.Log("button pressed");
                         if (m_PlayersSet[1])
                         {
                             m_PlayersReady[1] = true;
@@ -176,7 +172,6 @@ public class GameManager : MonoBehaviour {
                     if (Input.GetButtonDown("Player3Jump")) //|| (Input.GetAxis("PlaystationPlayer2ButtonX") > 0))
                     {
                         //CreatePlayer3
-                        Debug.Log("button pressed");
                         if (m_PlayersSet[2])
                         {
                             m_PlayersReady[2] = true;
@@ -188,7 +183,6 @@ public class GameManager : MonoBehaviour {
                     if (Input.GetButtonDown("Player4Jump")) //|| (Input.GetAxis("PlaystationPlayer2ButtonX") > 0))
                     {
                         //CreatePlayer4
-                        Debug.Log("button pressed");
                         if (m_PlayersSet[3])
                         {
                             m_PlayersReady[3] = true;
@@ -199,8 +193,9 @@ public class GameManager : MonoBehaviour {
 
                     break;
 
+                //GAME///////////////////////////////////////////////////
+                ///////////////////////////////////////////////////GAME//
                 case GameState.Game:
-
 
                     if (Input.GetKeyDown(KeyCode.Return))
                     {
@@ -209,10 +204,20 @@ public class GameManager : MonoBehaviour {
                         Application.LoadLevel("Lobby");
                     }
 
+                    if (m_GameFinished)
+                    {
+                        Debug.Log("Switching GameState");
+                        m_GameState = GameState.Lobby;
+                        Application.LoadLevel("Lobby");
+                    }
+
                     break;
             }
 
         }
+
+        
+
 
         if (m_GameStatePrev != m_GameState)
         {
@@ -225,24 +230,30 @@ public class GameManager : MonoBehaviour {
     {
         if (m_Transitioning)
         {
-            Debug.Log("banter");
+            Debug.Log("Transitioning");
 
             switch (m_GameState)
             {
                 case GameState.SplashScreen:
+                    Debug.Log("GameState"+m_GameState);
                     break;
 
                 case GameState.Lobby:
+                    Debug.Log("GameState" + m_GameState);
                     if (m_GameStatePrev == GameState.Game)
                     {
+                        m_Players.Clear();
                         for (int i = 0; i < m_MaxPlayers; i++)
                         {
                             m_PlayersReady[i] = false;
                         }
+
+                        m_GameFinished = false;
                     }
                     break;
 
                 case GameState.Game:
+                    Debug.Log("GameState" + m_GameState);
                     if (m_GameStatePrev == GameState.Lobby)
                     {
                         //Find references
@@ -253,17 +264,17 @@ public class GameManager : MonoBehaviour {
                             //Create Players
                             for (int i = 0; i < m_MaxPlayers; i++)
                             {
-                                GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
+                                if (m_PlayersReady[i])
+                                {
+                                    GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
 
-                                tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (i + 1);
-                                
-                                Debug.Log("Incrementnumber" + i);
-                                Debug.Log("PlayerNumber" + tempGameObject.GetComponent<CharacterController>().m_PlayerNumber);
-                                Debug.Log("PlayerName" + tempGameObject.GetComponent<CharacterController>().name);
+                                    tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (i + 1);
 
-                                tempGameObject.transform.position = m_LevelGenerator.GetComponent<GenerateLevel>().m_StartPoint.transform.position;
-                                tempGameObject.transform.position = tempGameObject.transform.position + new Vector3(-10.0f + (5.0f * i), tempGameObject.transform.position.y, tempGameObject.transform.position.z);
-                                m_Players.Add(tempGameObject);
+
+                                    tempGameObject.transform.position = m_LevelGenerator.GetComponent<GenerateLevel>().m_StartPoint.transform.position;
+                                    tempGameObject.transform.position = tempGameObject.transform.position + new Vector3(-10.0f + (5.0f * i), tempGameObject.transform.position.y, tempGameObject.transform.position.z);
+                                    m_Players.Add(tempGameObject);
+                                }
                             }
                         }
                     }
@@ -275,5 +286,14 @@ public class GameManager : MonoBehaviour {
         }
 
         return true;
+    }
+
+
+    public void IWon(string WinnerName)
+    {
+        Debug.Log(WinnerName + " won! yyyeeeeaa");
+
+        m_GameFinished = true;
+
     }
 }
