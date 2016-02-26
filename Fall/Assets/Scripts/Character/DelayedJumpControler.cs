@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum PlayerState {Idle,Running,Jumping,WallGrabLeft,WallGrabRight};
+//public enum PlayerState {Idle,Running,Jumping,WallGrabLeft,WallGrabRight};
 
-public class CharacterController : MonoBehaviour {
+public class DelayedJumpCharacterController : MonoBehaviour {
 
 	
 	[HideInInspector] public bool facingRight = true;
+	 public bool jumpAvailable = false;
 	[HideInInspector] public bool jump = false;
 	[HideInInspector] public bool jumpLeft = false;
 	[HideInInspector] public bool jumpRight = false;
@@ -59,7 +60,6 @@ public class CharacterController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         groundedPrev = grounded;
         grabbingLeftPrev = grabbingLeft;
 		grabbingRightPrev = grabbingRight;
@@ -91,7 +91,16 @@ public class CharacterController : MonoBehaviour {
 			grounded = true; grabbingLeft = false; grabbingRight = false;
 		}
 
+		//reset jump
+		if ((grounded || grabbingLeft || grabbingRight) && !jumpAvailable) {
+			jumpAvailable = true;
+		}
+		//reset double jump
+		if ((grounded || grabbingLeft || grabbingRight) && !m_DoubleJumpAvailable) {
+			m_DoubleJumpAvailable = true;
+		}
 		//set jump values
+		/*
 		if (Input.GetButtonDown (name+"Jump") && grounded) {
 			jump = true;
 		}
@@ -105,12 +114,26 @@ public class CharacterController : MonoBehaviour {
 		{
 			m_DoubleJump = true;
 			m_DoubleJumpAvailable = false;
+		}*/
+		if (Input.GetButtonDown (name+"Jump") && grabbingLeft && jumpAvailable) {
+			jumpRight= true;
+			jumpAvailable = false;
+		}
+		else if (Input.GetButtonDown (name+"Jump") && grabbingRight && jumpAvailable) {
+			jumpLeft = true;
+			jumpAvailable = false;
+		}
+		else if (Input.GetButtonDown (name+"Jump") && jumpAvailable) {
+			jump = true;
+			jumpAvailable = false;
+		}
+		else if (Input.GetButtonDown (name+"Jump") && m_DoubleJumpAvailable)
+		{
+			m_DoubleJump = true;
+			m_DoubleJumpAvailable = false;
 		}
 
-		//reset double jump
-		if ((grounded || grabbingLeft || grabbingRight) && !m_DoubleJumpAvailable) {
-			m_DoubleJumpAvailable = true;
-		}
+	
 	
 		if (jump || jumpLeft || jumpRight) {
 			TransitionState(PlayerState.Jumping);
@@ -148,13 +171,22 @@ public class CharacterController : MonoBehaviour {
                 m_AudioSource.PlayOneShot(m_AudioClipLand);
             }
         }
-		gameObject.layer = LayerMask.NameToLayer("Ground");
+	
 	}
 	
 	void FixedUpdate()
 	{
 		float h = Input.GetAxis(name+"LeftStickX");
+
 		
+		if (h > 0 && !facingRight) {
+			Flip ();
+			rigidBody.velocity = new Vector2 (0, rigidBody.velocity.y);
+		} else if (h < 0 && facingRight) {
+			Flip ();
+			rigidBody.velocity = new Vector2 (0, rigidBody.velocity.y);
+		}
+
 		//anim.SetFloat("Speed", Mathf.Abs(h));
 		if (!grabbingLeft && !grabbingRight) 
         {
@@ -173,14 +205,6 @@ public class CharacterController : MonoBehaviour {
 			}
 		}
 
-		if (h > 0 && !facingRight) {
-			Flip ();
-			rigidBody.velocity = new Vector2 (0, rigidBody.velocity.y);
-		} else if (h < 0 && facingRight) {
-			Flip ();
-			rigidBody.velocity = new Vector2 (0, rigidBody.velocity.y);
-		}
-
 
         //SOUND/////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////SOUND//
@@ -193,6 +217,7 @@ public class CharacterController : MonoBehaviour {
 
 		if (jump) {
 			//anim.SetTrigger("Jump");
+			rigidBody.velocity = new Vector3(rigidBody.velocity.x,0,0);
 			rigidBody.AddForce (new Vector2 (0f, jumpForce));
 			jump = false;
 		} else if (jumpLeft) {
