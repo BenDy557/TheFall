@@ -1,12 +1,17 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Terrain\MovingBlock.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Character\Reticule.cs">
     <Files>
-      <File FileName="Assets\Scripts\Terrain\DummyPrefab.cs" Line="31" Column="24" />
-      <File FileName="Assets\Scripts\Character\DelayedJumpControler.cs" Line="184" Column="63" />
-      <File FileName="Assets\Scripts\Character\CharacterController.cs" Line="139" Column="14" />
-      <File FileName="Assets\Scripts\Terrain\Rotate.cs" Line="40" Column="26" />
-      <File FileName="Assets\Scripts\Terrain\MovingBlock.cs" Line="43" Column="1" />
+      <File FileName="Assets\Scripts\Character\CharacterFire.cs" Line="29" Column="73" />
+      <File FileName="Assets\Scripts\Terrain\DummyPrefab.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Character\DelayedJumpControler.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Character\CharacterController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Terrain\Rotate.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Terrain\MovingBlock.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Generation\GenerateLevel.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Managers\GameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Character\bullet.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Character\Reticule.cs" Line="9" Column="86" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
