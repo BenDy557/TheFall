@@ -20,7 +20,8 @@ public class CharacterController : MonoBehaviour {
 	public Transform rightGrabCheck;
 	public float shuntForce = 2000.0f;
 	public bool CanDoubleJump = false;
-	private float timeScaler = 1.0f;
+	public bool isTimePoweredup = false;
+	private float timeSlowScaler= 1.0f;
 	public float height;
 	
 	public bool grounded = false;
@@ -42,6 +43,7 @@ public class CharacterController : MonoBehaviour {
 	public GameObject Model;
 	private float maxSpeed = 100f;
     private float maxControlSpeed = 5.0f;
+	private float fixeddeltatime;
 
 	private Rigidbody rigidBody;
 	private bool m_DoubleJump = false;
@@ -51,11 +53,24 @@ public class CharacterController : MonoBehaviour {
 	{
 		anim = Model.GetComponent<Animator>();
         m_AudioSource = gameObject.AddComponent<AudioSource>();
+<<<<<<< Updated upstream
         
 		rigidBody = GetComponent<Rigidbody>();
 		height = GetComponent<CapsuleCollider> ().height *transform.localScale.y;
 		m_PlayerState = PlayerState.Idle;
 	}
+=======
+
+        rigidBody = GetComponent<Rigidbody>();
+        height = GetComponent<CapsuleCollider>().height * transform.localScale.y;
+        m_PlayerState = PlayerState.Idle;
+
+		fixeddeltatime = Time.fixedDeltaTime;
+
+    }
+
+	
+>>>>>>> Stashed changes
 	
 	// Update is called once per frame
 	void Update () 
@@ -153,16 +168,18 @@ public class CharacterController : MonoBehaviour {
 	
 	void FixedUpdate()
 	{
-		float h = Input.GetAxis(name+"LeftStickX");
-		
+		float h = Input.GetAxis (name + "LeftStickX");
+
 		//anim.SetFloat("Speed", Mathf.Abs(h));
 		if (!grabbingLeft && !grabbingRight) 
         {
-			if (h * rigidBody.velocity.x < maxControlSpeed)
-				rigidBody.AddForce (Vector2.right * h * moveForce);
+			if (h * rigidBody.velocity.x < maxControlSpeed/(timeSlowScaler*Time.fixedDeltaTime/fixeddeltatime))
+				rigidBody.AddForce (Vector2.right * h * moveForce/(timeSlowScaler*Time.fixedDeltaTime/fixeddeltatime));	// DM: term under move force is 1 when no slow time in play
+																														// but adjusts appropriately when it is(effectively divides by slow 
+																														// ratio twice as acceleration goes with the square of time and linearly with force
 		
-			if (Mathf.Abs (rigidBody.velocity.x) > maxSpeed)
-				rigidBody.velocity = new Vector2 (Mathf.Sign (rigidBody.velocity.x) * maxSpeed, rigidBody.velocity.y);
+			if (Mathf.Abs (rigidBody.velocity.x) > maxSpeed/(timeSlowScaler*Time.fixedDeltaTime/fixeddeltatime))
+				rigidBody.velocity = new Vector2 (Mathf.Sign (rigidBody.velocity.x) * maxSpeed/(timeSlowScaler*Time.fixedDeltaTime/fixeddeltatime), rigidBody.velocity.y);
 
 			if(h!=0)
 			{
@@ -191,25 +208,27 @@ public class CharacterController : MonoBehaviour {
 
 		if (jump) {
 			//anim.SetTrigger("Jump");
-			rigidBody.AddForce (new Vector2 (0f, jumpForce));
+			rigidBody.AddForce (new Vector2 (0f, jumpForce)/(timeSlowScaler*Time.fixedDeltaTime/fixeddeltatime));
 			jump = false;
 		} else if (jumpLeft) {
 			//anim.SetTrigger("Jump");
-			rigidBody.AddForce (new Vector2 (-200f, jumpForce));
+			rigidBody.AddForce (new Vector2 (-200f, jumpForce)/(timeSlowScaler*Time.fixedDeltaTime/fixeddeltatime));
 			gameObject.GetComponent<Player> ().lowerDrag ();
 			jumpLeft = false;
 		} else if (jumpRight) {
 			//anim.SetTrigger("Jump");
-			rigidBody.AddForce (new Vector2 (200f, jumpForce));
+			rigidBody.AddForce (new Vector2 (200f, jumpForce)/(timeSlowScaler*Time.fixedDeltaTime/fixeddeltatime));
 			gameObject.GetComponent<Player> ().lowerDrag ();
 			jumpRight = false;
 		} else if (m_DoubleJump && CanDoubleJump) {
 			rigidBody.velocity = new Vector3(rigidBody.velocity.x,0,0);
-			rigidBody.AddForce (new Vector2 (0f, jumpForce));
+			rigidBody.AddForce (new Vector2 (0f, jumpForce/(timeSlowScaler*Time.fixedDeltaTime/fixeddeltatime)));
 			m_DoubleJump = false;
 		}
 
-        
+		if (isTimePoweredup) {
+			rigidBody.AddForce (new Vector2 (0f, Physics.gravity.y / (timeSlowScaler*timeSlowScaler)));
+		}	
 	}
 
 
@@ -290,11 +309,21 @@ public class CharacterController : MonoBehaviour {
 
 	IEnumerator TimeSlow(float time)
 	{
-		timeScaler = 0.5f;
-		Time.timeScale = 0.5f;
+		timeSlowScaler = 0.5f; 											//DM: sets time slow ratio
+		Time.timeScale = timeSlowScaler;								//sets time scale
+		Time.fixedDeltaTime = Time.fixedDeltaTime * timeSlowScaler;		// adjusts physics frame rate to account for change in time scale(timeScale dictates how quickly game time passes 
+																		// and fixedDeltaTime is calculated in game time for some reason
+		isTimePoweredup = true;											// boolean to alter gravity behaviour up above probably not necessary if you give gravity same treatment as jump/move
+		rigidBody.useGravity = false;									// see gravity treatment above
+
 		yield return new WaitForSeconds (time);
-		timeScaler = 1.0f;
-		Time.timeScale = 1.0f;
+
+		Time.timeScale = 1.0f;											// reverses all previous effects once powerup timer ends
+		Time.fixedDeltaTime = Time.fixedDeltaTime /	 timeSlowScaler;
+		timeSlowScaler = 1.0f;
+		isTimePoweredup = false;
+		rigidBody.useGravity = true;
+
 	}
 }
 
