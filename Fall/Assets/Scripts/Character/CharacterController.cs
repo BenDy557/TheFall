@@ -85,36 +85,25 @@ public class CharacterController : MonoBehaviour {
 
         anim = Model.GetComponent<Animator>();
         m_AudioSource = gameObject.AddComponent<AudioSource>();
-<<<<<<< HEAD
+
 
         rigidBody = GetComponent<Rigidbody>();
         height = GetComponent<CapsuleCollider>().height * transform.localScale.y;
         m_PlayerState = PlayerState.Idle;
 
         
-=======
-<<<<<<< Updated upstream
+
         
 		rigidBody = GetComponent<Rigidbody>();
 		height = GetComponent<CapsuleCollider> ().height *transform.localScale.y;
 		m_PlayerState = PlayerState.Idle;
-	}
-=======
-
-        rigidBody = GetComponent<Rigidbody>();
-        height = GetComponent<CapsuleCollider>().height * transform.localScale.y;
-        m_PlayerState = PlayerState.Idle;
 
 		fixeddeltatime = Time.fixedDeltaTime;
->>>>>>> SlowMo
+
 
     }
 
-	
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
->>>>>>> SlowMo
+
 	
 	// Update is called once per frame
 	void Update () 
@@ -218,12 +207,12 @@ public class CharacterController : MonoBehaviour {
 		//anim.SetFloat("Speed", Mathf.Abs(h));
 		if (!grabbingLeft && !grabbingRight) 
         {
-			if (h * rigidBody.velocity.x < maxControlSpeed/(timeSlowScaler*Time.fixedDeltaTime/fixeddeltatime))
+			if (h * rigidBody.velocity.x < maxControlSpeed/(timeSlowScaler))
 				rigidBody.AddForce (Vector2.right * h * moveForce/(timeSlowScaler*Time.fixedDeltaTime/fixeddeltatime));	// DM: term under move force is 1 when no slow time in play
 																														// but adjusts appropriately when it is(effectively divides by slow 
 																														// ratio twice as acceleration goes with the square of time and linearly with force
 		
-			if (Mathf.Abs (rigidBody.velocity.x) > maxSpeed/(timeSlowScaler*Time.fixedDeltaTime/fixeddeltatime))
+			if (Mathf.Abs (rigidBody.velocity.x) > maxSpeed/(timeSlowScaler))
 				rigidBody.velocity = new Vector2 (Mathf.Sign (rigidBody.velocity.x) * maxSpeed/(timeSlowScaler*Time.fixedDeltaTime/fixeddeltatime), rigidBody.velocity.y);
 
 			if(h!=0)
