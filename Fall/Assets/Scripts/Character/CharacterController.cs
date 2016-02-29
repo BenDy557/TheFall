@@ -80,9 +80,7 @@ public class CharacterController : MonoBehaviour {
                 name = "InvalidPlayerNumber";
                 break;
         }
-
-        Debug.Log("PlayerNumber" + m_PlayerNumber);
-        Debug.Log("PlayerName CharacterController" + name);
+	
 
 
         anim = Model.GetComponent<Animator>();

@@ -65,11 +65,10 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        Debug.Log("GameFinished"+m_GameFinished);
         
         if (TransitionState())
         {
-            Debug.Log("NOTTransitioning");
+            //Debug.Log("NOTTransitioning");
             m_GameStatePrev = m_GameState;
 
             switch (m_GameState)
@@ -116,7 +115,7 @@ public class GameManager : MonoBehaviour {
                         //load game with amout of players
 
                         m_GameState = GameState.Game;
-                        Application.LoadLevel("GameManagerLevel");
+                        Application.LoadLevel("MainScene");
                     }
 
                     //listen for all input to see if player wants to join game
@@ -199,14 +198,14 @@ public class GameManager : MonoBehaviour {
 
                     if (Input.GetKeyDown(KeyCode.Return))
                     {
-                        Debug.Log("Loading Game");
+                        //Debug.Log("Loading Game");
                         m_GameState = GameState.Lobby;
                         Application.LoadLevel("Lobby");
                     }
 
                     if (m_GameFinished)
                     {
-                        Debug.Log("Switching GameState");
+                        //Debug.Log("Switching GameState");
                         m_GameState = GameState.Lobby;
                         Application.LoadLevel("Lobby");
                     }
@@ -230,16 +229,16 @@ public class GameManager : MonoBehaviour {
     {
         if (m_Transitioning)
         {
-            Debug.Log("Transitioning");
+            //Debug.Log("Transitioning");
 
             switch (m_GameState)
             {
                 case GameState.SplashScreen:
-                    Debug.Log("GameState"+m_GameState);
+                    //Debug.Log("GameState"+m_GameState);
                     break;
 
                 case GameState.Lobby:
-                    Debug.Log("GameState" + m_GameState);
+                    //Debug.Log("GameState" + m_GameState);
                     if (m_GameStatePrev == GameState.Game)
                     {
                         m_Players.Clear();
@@ -253,7 +252,7 @@ public class GameManager : MonoBehaviour {
                     break;
 
                 case GameState.Game:
-                    Debug.Log("GameState" + m_GameState);
+                    //Debug.Log("GameState" + m_GameState);
                     if (m_GameStatePrev == GameState.Lobby)
                     {
                         //Find references
@@ -291,7 +290,7 @@ public class GameManager : MonoBehaviour {
 
     public void IWon(string WinnerName)
     {
-        Debug.Log(WinnerName + " won! yyyeeeeaa");
+        //Debug.Log(WinnerName + " won! yyyeeeeaa");
 
         m_GameFinished = true;
 

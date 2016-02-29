@@ -7,7 +7,6 @@ public class Reticule : MonoBehaviour {
     void Start()
     {
         name =  transform.parent.gameObject.GetComponent<CharacterController>().name;
-        Debug.Log("PlayerName CharacterReticule" + name);
     }
 
 	void Update ()
