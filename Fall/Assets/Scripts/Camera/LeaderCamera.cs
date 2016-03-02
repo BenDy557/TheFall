@@ -9,7 +9,10 @@ public class LeaderCamera : MonoBehaviour
 	
 	private Rigidbody rb;
 	private GameObject leader;
+	private GameObject last;
 	private float highest;
+	private float lowest;
+	private float hiLoSpread;
 	private float scaler;
 	private float screenHeight;
 	
@@ -19,7 +22,7 @@ public class LeaderCamera : MonoBehaviour
 		rb = GetComponent<Rigidbody>();
 	}
 
-    void Update()
+    void FixedUpdate()
     {
         Vector3 movement = new Vector3(0.0f, 1.0f, 0.0f);								//camera movement defaults to "speed"
         screenHeight = 2 * Mathf.Atan(Mathf.Deg2Rad * Camera.main.fieldOfView / 2);		//calculates screen height from field of view 
@@ -42,6 +45,32 @@ public class LeaderCamera : MonoBehaviour
                 }
             }
 
+			lowest = leader.transform.position.y;
+
+			foreach (GameObject player in players)
+			{
+				if (player.transform.position.y <leader.transform.position.y && player.transform.position.y < lowest)
+				{
+					last = player;
+					lowest = last.transform.position.y;
+				}
+			}
+
+			hiLoSpread = highest - lowest -8;
+
+			if (hiLoSpread<0)
+			{
+				transform.position = new Vector3 (0.0f,transform.position.y,-10f);
+			}
+			else if (hiLoSpread>0 && hiLoSpread < 3)
+			{
+				transform.position = new Vector3 (0.0f,transform.position.y,Mathf.Lerp(-10,-15, hiLoSpread/3));
+			}
+			else if (hiLoSpread>3)
+			{
+				transform.position = new Vector3 (0.0f,transform.position.y, -15f);
+			}
+
             if (leader.transform.position.y > transform.position.y)
             {
                 scaler = 1 + (speedScaler * Mathf.Abs((transform.position.y - leader.transform.position.y) /
@@ -56,11 +85,7 @@ public class LeaderCamera : MonoBehaviour
         }
     }
 	
-	// Update is called once per frame
-	void FixedUpdate () 
-	{
-		
-	}
+
 }
 
 
