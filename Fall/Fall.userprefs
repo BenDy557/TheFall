@@ -5,6 +5,7 @@
       <File FileName="Assets\Scripts\Character\timer.cs" Line="64" Column="1" />
       <File FileName="Assets\Scripts\Character\CharacterFire.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Terrain\DummyPrefab.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Character\CharacterFire.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Character\DelayedJumpControler.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Character\CharacterController.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Terrain\Rotate.cs" Line="1" Column="1" />

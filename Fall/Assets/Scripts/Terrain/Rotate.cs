@@ -19,6 +19,8 @@ public class Rotate : MonoBehaviour {
 		{
 			makeRotate (1*Mathf.Sign(Random.Range(-1,1)));
 		}*/
+
+
 	}
 
 	public Rotate(Rotate other)
@@ -43,6 +45,9 @@ public class Rotate : MonoBehaviour {
 	}
 	IEnumerator rotate(float dir)
 	{
+		if (Children == null) {
+			Children = new List<GameObject> ();
+		}
 		foreach (GameObject obj in Children) {
 			obj.GetComponent<CharacterController>().Shunt(dir);
 		}
@@ -66,6 +71,9 @@ public class Rotate : MonoBehaviour {
 
 	public void addObject(GameObject obj)
 	{
+		if (Children == null) {
+			Children = new List<GameObject> ();
+		}
 		Children.Add (obj);
 	}
 
