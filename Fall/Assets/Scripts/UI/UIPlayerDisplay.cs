@@ -20,7 +20,7 @@ public class UIPlayerDisplay : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		for(int cnt =0 ; cnt < 1; cnt++)
+		for(int cnt =0 ; cnt < 4; cnt++)
 		{
 			if(m_PlayerObjects[cnt]!=null)
 			{
