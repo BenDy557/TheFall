@@ -109,7 +109,7 @@ public class PlayerAbility : MonoBehaviour {
 			}
 		}*/
 		m_Type = PickupType.empty;
-
+	}
 	public void ChangePickup(PickupType type)
 	{
 		m_Type = type;
