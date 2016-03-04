@@ -89,7 +89,7 @@ public class CharacterController : MonoBehaviour {
                 break;
         }
 	
-
+		RegisterUI ();
 
         anim = Model.GetComponent<Animator>();
         m_AudioSource = gameObject.AddComponent<AudioSource>();
@@ -425,6 +425,11 @@ public class CharacterController : MonoBehaviour {
 		isTimePoweredup = false;
 		rigidBody.useGravity = true;
 
+	}
+
+	void RegisterUI()
+	{
+		GameObject.FindGameObjectWithTag ("UIManager").GetComponent<UIPlayerDisplay> ().RegisterPlayer (m_PlayerNumber, gameObject);
 	}
 }
 
