@@ -26,7 +26,8 @@ public class Pickup : MonoBehaviour
             Destroy(gameObject);
             //PowerUpPlayer
             //StartPickupAnimation
-            collider.gameObject.GetComponent<PlayerAbility>().m_Type = m_Type;
+            //collider.gameObject.GetComponent<PlayerAbility>().m_Type = m_Type;
+			collider.gameObject.GetComponent<PlayerAbility>().ChangePickup(m_Type);
         }
 	}
 }

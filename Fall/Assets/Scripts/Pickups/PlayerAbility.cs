@@ -6,13 +6,17 @@ public class PlayerAbility : MonoBehaviour {
     public PickupType m_Type;
 
     private string m_PlayerNumber;
+	private GameObject m_UIManager;
+	int m_ID;
 
 	[SerializeField] private float m_DoubleJumpDuration = 5.0f;
 
 	// Use this for initialization
 	void Start () {
+		m_UIManager = GameObject.FindGameObjectWithTag ("UIManager");
         m_Type = PickupType.empty;
         m_PlayerNumber = gameObject.GetComponent<CharacterController>().name;
+		m_ID = gameObject.GetComponent<CharacterController>().m_PlayerNumber;
 	}
 	
 	// Update is called once per frame
@@ -56,6 +60,7 @@ public class PlayerAbility : MonoBehaviour {
                 break;
 
         }
+		ClearPickup ();
     }
 
     void RotateAll()
@@ -85,6 +90,17 @@ public class PlayerAbility : MonoBehaviour {
 	{
 		gameObject.GetComponent<CharacterController>().EnableTimeSlow(time);
 		m_Type = PickupType.empty;
+	}
+
+	public void ChangePickup(PickupType type)
+	{
+		m_Type = type;
+		m_UIManager.GetComponent<UIPlayerDisplay> ().ChangePower (m_ID,type);
+	}
+
+	public void ClearPickup()
+	{
+		m_UIManager.GetComponent<UIPlayerDisplay> ().ClearPower (m_ID);
 	}
 
 

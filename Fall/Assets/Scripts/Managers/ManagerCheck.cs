@@ -5,7 +5,7 @@ public class ManagerCheck : MonoBehaviour {
 
     public GameManager.GameState m_CurrentGameState;
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 
         if (!FindObjectOfType<GameManager>())
         {
