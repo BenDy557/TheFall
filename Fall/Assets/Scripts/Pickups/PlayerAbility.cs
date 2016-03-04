@@ -10,6 +10,8 @@ public class PlayerAbility : MonoBehaviour {
 
 	[SerializeField] private float m_DoubleJumpDuration = 5.0f;
 
+    public float m_SwapChargeUpTime = 2.0f;
+
 	// Use this for initialization
 	void Start () {
         m_Type = PickupType.empty;
@@ -34,7 +36,7 @@ public class PlayerAbility : MonoBehaviour {
                 
                 break;
             case PickupType.leaderSwap:
-                Debug.Log("Swap");
+                StartCoroutine(SwapChargeUp());
                 break;
             case PickupType.phaseBlock:
                 //Debug.Log("Phase");
@@ -105,5 +107,52 @@ public class PlayerAbility : MonoBehaviour {
 		m_Type = PickupType.empty;
 	}
 
+    void SwapPlayer()
+    {
+        players = new GameObject[0];
+        players = GameObject.FindGameObjectsWithTag("Player");
 
+        GameObject tempCurrentPlayer;
+        GameObject tempSwapPlayer;
+        tempCurrentPlayer = new GameObject();
+        tempSwapPlayer = new GameObject();
+        float tempHighest = 0.0f;
+
+        for(int i = 0;i<players.Length;i++)
+        {
+            if (players[i].transform.position.y > tempHighest)
+            {
+                tempHighest = players[i].transform.position.y;
+                tempSwapPlayer = players[i];
+            }
+
+            if (players[i].GetComponent<CharacterController>().name == m_PlayerNumber)
+            {
+                tempCurrentPlayer = players[i];
+            }
+        }
+
+        if (tempCurrentPlayer == tempSwapPlayer)
+        {
+            //highest is with power up
+            //dont use it
+        }
+        else
+        {
+            Vector3 tempCurrentPlayerPosition = new Vector3(tempCurrentPlayer.transform.position.x,tempCurrentPlayer.transform.position.y,tempCurrentPlayer.transform.position.z);
+            tempCurrentPlayer.transform.position = new Vector3(tempSwapPlayer.transform.position.x,tempSwapPlayer.transform.position.y,tempSwapPlayer.transform.position.z);
+            tempSwapPlayer.transform.position = new Vector3(tempCurrentPlayerPosition.x, tempCurrentPlayerPosition.y, tempCurrentPlayerPosition.z);
+        }
+
+
+        
+    }
+
+
+    IEnumerator SwapChargeUp()
+    {
+        
+        yield return new WaitForSeconds(m_SwapChargeUpTime);
+        SwapPlayer();
+    }
 }
