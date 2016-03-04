@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\Character\PlayerManager.cs" />
      <Compile Include="Assets\Scripts\Character\RespawnManager.cs" />
      <Compile Include="Assets\Scripts\Character\Reticule.cs" />
+     <Compile Include="Assets\Scripts\Character\ReverseControlsShot.cs" />
      <Compile Include="Assets\Scripts\Character\TextPos.cs" />
      <Compile Include="Assets\Scripts\Character\WallDrag.cs" />
      <Compile Include="Assets\Scripts\Character\bullet.cs" />
