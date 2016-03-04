@@ -34,12 +34,19 @@ public class CharacterController : MonoBehaviour {
     private bool grabbingLeftPrev = false;
     private bool grabbingRightPrev = false;
 
+    //AUDIO
     [HideInInspector] public AudioSource m_AudioSource;
     public AudioClip m_AudioClipLand;
     public AudioClip m_AudioClipShoot;
     public AudioClip m_AudioClipDeath;
     public AudioClip m_AudioClipJump;
 
+    //EFFECTS
+    public ParticleSystem m_ParticleSystemLand;
+    public ParticleSystem m_ParticleSystemWallLeft;
+    public ParticleSystem m_ParticleSystemWallLeftJump;
+    public ParticleSystem m_ParticleSystemWallRight;
+    public ParticleSystem m_ParticleSystemWallRightJump;
 
 	public Animator anim;
 	public GameObject Model;
@@ -86,7 +93,7 @@ public class CharacterController : MonoBehaviour {
 
         anim = Model.GetComponent<Animator>();
         m_AudioSource = gameObject.AddComponent<AudioSource>();
-
+        
 
         rigidBody = GetComponent<Rigidbody>();
         height = GetComponent<CapsuleCollider>().height * transform.localScale.y;
@@ -175,11 +182,14 @@ public class CharacterController : MonoBehaviour {
 
         //SOUND////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////SOUND//
+        //PARTICLES////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////PARTICLES//
         if (grounded != groundedPrev)
         {
             if (grounded == true)
             {
                 m_AudioSource.PlayOneShot(m_AudioClipLand);
+                m_ParticleSystemLand.Emit(Mathf.Abs((int)rigidBody.velocity.y));
             }
         }
 
@@ -198,6 +208,24 @@ public class CharacterController : MonoBehaviour {
                 m_AudioSource.PlayOneShot(m_AudioClipLand);
             }
         }
+
+        if (grabbingLeft)
+        {
+            m_ParticleSystemWallLeft.enableEmission = true;
+        }
+        else
+        {
+            m_ParticleSystemWallLeft.enableEmission = false;
+        }
+        if (grabbingRight)
+        {
+            m_ParticleSystemWallRight.enableEmission = true;
+        }
+        else
+        {
+            m_ParticleSystemWallRight.enableEmission = false;
+        }
+
 		gameObject.layer = LayerMask.NameToLayer("Ground");
 	}
 	
@@ -241,15 +269,35 @@ public class CharacterController : MonoBehaviour {
 
         //SOUND/////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////SOUND//
+        //PARTICLES/////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////PARTICLES//
         if (jump || jumpLeft || jumpRight || (m_DoubleJump && CanDoubleJump))
         {
             m_AudioSource.PlayOneShot(m_AudioClipJump);
             //Debug.Log("jumpSound");
+            if (jump)
+            {
+                m_ParticleSystemLand.Emit(10);
+            }
+
+            if (m_DoubleJump && CanDoubleJump)
+            {
+                m_ParticleSystemLand.Emit(5);
+            }
+
+            if (jumpLeft)
+            {
+                m_ParticleSystemWallRightJump.Emit(10);
+            }
+
+            if (jumpRight)
+            {
+                m_ParticleSystemWallLeftJump.Emit(10);
+            }
         }
 
 
 		if (jump) {
-			//anim.SetTrigger("Jump");
 			rigidBody.AddForce (new Vector2 (0f, jumpForce)/(timeSlowScaler*Time.fixedDeltaTime/fixeddeltatime));
 			jump = false;
 		} else if (jumpLeft) {

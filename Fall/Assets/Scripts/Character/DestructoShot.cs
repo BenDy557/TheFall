@@ -5,7 +5,7 @@ public class DestructoShot : MonoBehaviour {
 
 
 	public float speed = 10.0f;
-	public float range = 20.0f;
+	public float range = 80.0f;
 	public float pushForce = 3000.0f;
 	private GameObject parentPlayer;
 	// Use this for initialization
