@@ -22,6 +22,7 @@ public class CharacterController : MonoBehaviour {
 	public float shuntForce = 2000.0f;
 	public bool CanDoubleJump = false;
 	public bool isTimePoweredup = false;
+	public bool isReversed =false;
 	private float timeSlowScaler= 1.0f;
 	public float height;
 	
@@ -204,6 +205,11 @@ public class CharacterController : MonoBehaviour {
 	{
 		float h = Input.GetAxis (name + "LeftStickX");
 
+		//reverse controls effect
+		if (isReversed) {
+			h = -h;
+		}
+
 		//anim.SetFloat("Speed", Mathf.Abs(h));
 		if (!grabbingLeft && !grabbingRight) 
         {
@@ -336,6 +342,17 @@ public class CharacterController : MonoBehaviour {
 		CanDoubleJump = true;
 		yield return new WaitForSeconds(time);
 		CanDoubleJump = false;
+	}
+
+	public void EnableReverseControls(float time)
+	{
+		StartCoroutine (ReversedControls(time));
+	}
+	IEnumerator ReversedControls(float time)
+	{
+		isReversed=true;
+		yield return new WaitForSeconds(time);
+		isReversed=false;
 	}
 
 	public void EnableTimeSlow(float time)

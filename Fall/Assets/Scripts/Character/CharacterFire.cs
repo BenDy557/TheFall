@@ -7,13 +7,14 @@ public class CharacterFire : MonoBehaviour {
 	private string m_CharacterName;
 	public GameObject bullet;
     public GameObject destructoShot;
+	public GameObject reverseControlsShot;
 	public GameObject reticule;
 	Vector3 offsetReticule;
 
     [HideInInspector] public AudioSource m_AudioSource;
     public AudioClip m_AudioClipFire;
 
-    public bool empowered;
+    public int empoweredType=0;
 
 	// Use this for initialization
 	void Awake()
@@ -41,19 +42,23 @@ public class CharacterFire : MonoBehaviour {
 			fired = true;
 
             GameObject newBullet;
-            if (empowered)
+            if (empoweredType==1)
             {
                 newBullet = (GameObject)Instantiate(destructoShot, transform.position, Quaternion.identity);
                 newBullet.GetComponent<DestructoShot>().SetParentPlayer(gameObject);
-                empowered = false;
+                empoweredType = 0;
             }
-            else
+            else if (empoweredType==2)
             {
-                newBullet = (GameObject)Instantiate(bullet, transform.position, Quaternion.identity);
-                newBullet.GetComponent<bullet>().SetParentPlayer(gameObject);
+                newBullet = (GameObject)Instantiate(reverseControlsShot, transform.position, Quaternion.identity);
+                newBullet.GetComponent<ReverseControlsShot>().SetParentPlayer(gameObject);
+				empoweredType = 0;
             }
-
-			
+			else
+			{
+				newBullet = (GameObject)Instantiate(bullet, transform.position, Quaternion.identity);
+				newBullet.GetComponent<bullet>().SetParentPlayer(gameObject);
+			}
 			newBullet.transform.LookAt(offsetReticule);
 
 

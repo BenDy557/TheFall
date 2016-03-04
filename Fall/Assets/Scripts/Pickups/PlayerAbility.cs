@@ -6,6 +6,7 @@ public class PlayerAbility : MonoBehaviour {
     public PickupType m_Type;
 
     private string m_PlayerNumber;
+	private GameObject[] players;
 
 	[SerializeField] private float m_DoubleJumpDuration = 5.0f;
 
@@ -32,9 +33,6 @@ public class PlayerAbility : MonoBehaviour {
             case PickupType.empty:
                 
                 break;
-            case PickupType.invertControls:
-                Debug.Log("Invert");
-                break;
             case PickupType.leaderSwap:
                 Debug.Log("Swap");
                 break;
@@ -50,6 +48,9 @@ public class PlayerAbility : MonoBehaviour {
 				break;
 			case PickupType.timeSlow:
 				EnableTimeSlow(m_DoubleJumpDuration);
+				break;
+			case PickupType.reverseControls:
+				EnableReverseControls(m_DoubleJumpDuration);
 				break;
             default:
                 Debug.Log("NOTHING");
@@ -77,13 +78,30 @@ public class PlayerAbility : MonoBehaviour {
 
     void EmpowerBullet()
     {
-        gameObject.GetComponent<CharacterFire>().empowered = true;
+        gameObject.GetComponent<CharacterFire>().empoweredType = 1;
         m_Type = PickupType.empty;
     }
 
 	void EnableTimeSlow(float time)
 	{
 		gameObject.GetComponent<CharacterController>().EnableTimeSlow(time);
+		m_Type = PickupType.empty;
+	}
+
+	void EnableReverseControls(float time)
+	{
+		gameObject.GetComponent<CharacterFire> ().empoweredType = 2;
+
+		///////////////DM: Below would just apply the debuff to all players other than the powerup user.(Tested and works)
+		/*players = new GameObject[0];
+		players = GameObject.FindGameObjectsWithTag("Player");
+		foreach (GameObject player in players)
+		{
+			if (player.GetComponent<CharacterController>().name!= m_PlayerNumber)
+			{
+				player.GetComponent<CharacterController>().EnableReverseControls(time);
+			}
+		}*/
 		m_Type = PickupType.empty;
 	}
 
