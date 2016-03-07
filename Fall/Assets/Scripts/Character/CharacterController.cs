@@ -47,6 +47,8 @@ public class CharacterController : MonoBehaviour {
     public ParticleSystem m_ParticleSystemWallLeftJump;
     public ParticleSystem m_ParticleSystemWallRight;
     public ParticleSystem m_ParticleSystemWallRightJump;
+    public ParticleSystem m_ParticleSystemDoubleJump;
+    
 
 	public Animator anim;
 	public GameObject Model;
@@ -93,7 +95,7 @@ public class CharacterController : MonoBehaviour {
 
         anim = Model.GetComponent<Animator>();
         m_AudioSource = gameObject.AddComponent<AudioSource>();
-        
+        m_ParticleSystemDoubleJump.enableEmission = false;
 
         rigidBody = GetComponent<Rigidbody>();
         height = GetComponent<CapsuleCollider>().height * transform.localScale.y;
@@ -283,7 +285,13 @@ public class CharacterController : MonoBehaviour {
             if (m_DoubleJump && CanDoubleJump)
             {
                 m_ParticleSystemLand.Emit(5);
+                
+                m_ParticleSystemDoubleJump.enableEmission = true;
+                StartCoroutine(DoubleJumpParticleWait(0.6f));
             }
+
+
+
 
             if (jumpLeft)
             {
@@ -321,6 +329,12 @@ public class CharacterController : MonoBehaviour {
 		}	
 	}
 
+    IEnumerator DoubleJumpParticleWait(float time)
+    {
+        //m_ParticleSystemDoubleJump.enableEmission = true;
+        yield return new WaitForSeconds(time);
+        m_ParticleSystemDoubleJump.enableEmission = false;
+    }
 
 	void Flip()
 	{
