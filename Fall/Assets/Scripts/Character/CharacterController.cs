@@ -48,6 +48,7 @@ public class CharacterController : MonoBehaviour {
     public ParticleSystem m_ParticleSystemWallRight;
     public ParticleSystem m_ParticleSystemWallRightJump;
     public ParticleSystem m_ParticleSystemDoubleJump;
+    public ParticleSystem m_ParticleSystemWinning;
     
 
 	public Animator anim;
@@ -229,6 +230,13 @@ public class CharacterController : MonoBehaviour {
         }
 
 		gameObject.layer = LayerMask.NameToLayer("Ground");
+
+        if(GetComponent<timer>().timeneeded<10.0f)
+        {
+            m_ParticleSystemWinning.Play();
+        }
+
+
 	}
 	
 	void FixedUpdate()

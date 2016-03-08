@@ -65,6 +65,7 @@
      <Compile Include="Assets\Scripts\Character\bullet.cs" />
      <Compile Include="Assets\Scripts\Character\groundCheck.cs" />
      <Compile Include="Assets\Scripts\Character\timer.cs" />
+     <Compile Include="Assets\Scripts\Debug\ObjectSpawner.cs" />
      <Compile Include="Assets\Scripts\Depreciated\OLD_CharacterController.cs" />
      <Compile Include="Assets\Scripts\Generation\EndTrigger.cs" />
      <Compile Include="Assets\Scripts\Generation\GenerateLevel.cs" />
