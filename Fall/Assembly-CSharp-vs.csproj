@@ -55,8 +55,10 @@
      <Compile Include="Assets\Scripts\Character\DestructoShot.cs" />
      <Compile Include="Assets\Scripts\Character\MeshColour.cs" />
      <Compile Include="Assets\Scripts\Character\MoveCamera.cs" />
+     <Compile Include="Assets\Scripts\Character\MovementConstant.cs" />
      <Compile Include="Assets\Scripts\Character\Player.cs" />
      <Compile Include="Assets\Scripts\Character\PlayerManager.cs" />
+     <Compile Include="Assets\Scripts\Character\RespawnEffect.cs" />
      <Compile Include="Assets\Scripts\Character\RespawnManager.cs" />
      <Compile Include="Assets\Scripts\Character\Reticule.cs" />
      <Compile Include="Assets\Scripts\Character\ReverseControlsShot.cs" />
