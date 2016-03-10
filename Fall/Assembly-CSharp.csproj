@@ -69,10 +69,15 @@
      <Compile Include="Assets\Scripts\Generation\EndTrigger.cs" />
      <Compile Include="Assets\Scripts\Generation\GenerateLevel.cs" />
      <Compile Include="Assets\Scripts\Generation\PrefabScript.cs" />
+     <Compile Include="Assets\Scripts\Lobby\Blink.cs" />
      <Compile Include="Assets\Scripts\Lobby\PlayerLobbyMenu.cs" />
+     <Compile Include="Assets\Scripts\Lobby\ReadyDisplay.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\LobbyRecord.cs" />
+     <Compile Include="Assets\Scripts\Managers\LobbySpawn.cs" />
      <Compile Include="Assets\Scripts\Managers\ManagerCheck.cs" />
      <Compile Include="Assets\Scripts\Managers\WinManager.cs" />
+     <Compile Include="Assets\Scripts\Pickups\ForeverPickups.cs" />
      <Compile Include="Assets\Scripts\Pickups\Pickup.cs" />
      <Compile Include="Assets\Scripts\Pickups\PickupSpawn.cs" />
      <Compile Include="Assets\Scripts\Pickups\PlayerAbility.cs" />

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ManagerCheck : MonoBehaviour {
 
-    public GameManager.GameState m_CurrentGameState;
+    public GameState m_CurrentGameState;
 	// Use this for initialization
 	void Awake () {
 
