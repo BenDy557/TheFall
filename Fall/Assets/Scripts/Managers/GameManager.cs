@@ -2,16 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 
-
+public enum GameState { SplashScreen, Lobby, Game };
 
 public class GameManager : MonoBehaviour {
 
-    public enum GameState { SplashScreen, Lobby, Game };
+  
     public GameState m_GameStateStart;
-    private GameState m_GameState;
+    public GameState m_GameState;
     private GameState m_GameStatePrev;
     private bool m_Transitioning;
-
+	public Transform[] m_LobySpawns;
+	public ReadyDisplay[] m_ReadyDisplays;
     [SerializeField] private string[] m_Controllers;
     [SerializeField] private int m_ControllerAmount;
 
@@ -60,6 +61,11 @@ public class GameManager : MonoBehaviour {
         //if player joined, instantiate play area for player
         //wait until players ready up
         //when all players ready up, load in level with appropriate amount of players
+
+		m_LobySpawns = GameObject.FindGameObjectWithTag ("LobbyRecord").GetComponent<LobbyRecord> ().m_LobySpawns;
+		m_ReadyDisplays = GameObject.FindGameObjectWithTag ("LobbyRecord").GetComponent<LobbyRecord> ().m_ReadyDisplays;
+		//System.Array.Copy (GameObject.FindGameObjectWithTag ("LobbyRecord").GetComponent<LobbyRecord> ().m_LobySpawns, m_LobySpawns, 4);
+		//GameObject.FindGameObjectWithTag ("LobbyRecord").GetComponent<LobbyRecord> ().m_LobySpawns.CopyTo (m_LobySpawns, 0);
 	}
 	
 	// Update is called once per frame
@@ -119,75 +125,82 @@ public class GameManager : MonoBehaviour {
                     }
 
                     //listen for all input to see if player wants to join game
-                    if (Input.GetButtonDown("Player1Jump"))//|| (Input.GetAxis("PlaystationPlayer1ButtonX") > 0))
+                    if (Input.GetButtonDown("Player1Start"))//|| (Input.GetAxis("PlaystationPlayer1ButtonX") > 0))
                     {
                         //Log player as wanting to join game
                         if (m_PlayersSet[0])
                         {
                             m_PlayersReady[0] = true;
+							m_ReadyDisplays[0].ToggleReady();
                             
                         }
-                        
+                        else{
                         m_PlayersSet[0] = true;
-
-                        //CreatePlayer1
-                        /*
-                        Debug.Log("CreatePlayer1");
-                        GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Lobby/LobbyPlayground"));
-
-                        Debug.Log("m_PlayersMenu.Count" + m_PlayersMenu.Count);
-                        for (int i = 0; i < 4; i++)
-                        {
-                            if (m_PlayersMenu[i].GetComponent<PlayerLobbyMenu>().m_PlayerNumber == 1)
-                            {
-                                tempGameObject.transform.position = m_PlayersMenu[i].transform.GetChild(0).transform.position;
-
-                                i = 4;
-                            }
-                        }
-
-                        GameObject tempGameObjectPlayer = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Lobby/PlayerLobby"));
-                        tempGameObjectPlayer.GetComponent<CharacterController>().name = "Player1";
-                        GameObject tempGameObjectPlayerSpawn = GameObject.FindGameObjectWithTag("LobbyPlayerSpawn");
-                        tempGameObjectPlayer.transform.position = tempGameObjectPlayerSpawn.transform.position;
-                        Destroy(tempGameObjectPlayerSpawn);
-
-                        m_PlayersLobby.Add(tempGameObjectPlayer);
-                        m_PlayersSet[0] = true;
-                        */
+				
+						GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
+						
+						tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (1);
+						m_ReadyDisplays[0].ToggleJoined();
+						
+						tempGameObject.transform.position = m_LobySpawns[0].position;
+					}
                     }
 
-                    if (Input.GetButtonDown("Player2Jump")) //|| (Input.GetAxis("PlaystationPlayer2ButtonX") > 0))
+				if (Input.GetButtonDown("Player2Start")) //|| (Input.GetAxis("PlaystationPlayer2ButtonX") > 0))
                     {
                         //CreatePlayer2
                         if (m_PlayersSet[1])
                         {
                             m_PlayersReady[1] = true;
+							m_ReadyDisplays[1].ToggleReady();
                         }
-
+					else{
                         m_PlayersSet[1] = true;
+						GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
+						m_ReadyDisplays[1].ToggleJoined();
+						tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (2);
+						
+						
+					tempGameObject.transform.position = m_LobySpawns[1].position;
+			
+					}
                     }
 
-                    if (Input.GetButtonDown("Player3Jump")) //|| (Input.GetAxis("PlaystationPlayer2ButtonX") > 0))
+				if (Input.GetButtonDown("Player3Start")) //|| (Input.GetAxis("PlaystationPlayer2ButtonX") > 0))
                     {
                         //CreatePlayer3
                         if (m_PlayersSet[2])
                         {
                             m_PlayersReady[2] = true;
+							m_ReadyDisplays[2].ToggleReady();
                         }
-
+					else {
                         m_PlayersSet[2] = true;
+						GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
+						m_ReadyDisplays[2].ToggleJoined();
+						tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (3);
+						
+						
+					tempGameObject.transform.position =m_LobySpawns[2].position;
+					}
+						
                     }
 
-                    if (Input.GetButtonDown("Player4Jump")) //|| (Input.GetAxis("PlaystationPlayer2ButtonX") > 0))
+				if (Input.GetButtonDown("Player4Start")) //|| (Input.GetAxis("PlaystationPlayer2ButtonX") > 0))
                     {
                         //CreatePlayer4
                         if (m_PlayersSet[3])
                         {
                             m_PlayersReady[3] = true;
+							m_ReadyDisplays[3].ToggleReady();
                         }
-
+					else{
                         m_PlayersSet[3] = true;
+						GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
+						m_ReadyDisplays[3].ToggleJoined();
+						tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (4);
+					tempGameObject.transform.position =m_LobySpawns[3].position;
+					}
                     }
 
                     break;
@@ -208,6 +221,7 @@ public class GameManager : MonoBehaviour {
                         //Debug.Log("Switching GameState");
                         m_GameState = GameState.Lobby;
                         Application.LoadLevel("Lobby");
+						
                     }
 
                     break;
@@ -245,8 +259,10 @@ public class GameManager : MonoBehaviour {
                         for (int i = 0; i < m_MaxPlayers; i++)
                         {
                             m_PlayersReady[i] = false;
+							m_PlayersSet[i] = false;
                         }
-
+						m_LobySpawns = GameObject.FindGameObjectWithTag ("LobbyRecord").GetComponent<LobbyRecord> ().m_LobySpawns;
+						m_ReadyDisplays = GameObject.FindGameObjectWithTag ("LobbyRecord").GetComponent<LobbyRecord> ().m_ReadyDisplays;
                         m_GameFinished = false;
                     }
                     break;

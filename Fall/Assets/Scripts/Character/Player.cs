@@ -9,9 +9,13 @@ public class Player : MonoBehaviour {
     
 
 	private RespawnManager m_RespawnManager;
+	private LobbySpawn m_LobbySpawn;
 	// Use this for initialization
 	void Start () {
-		m_RespawnManager = GameObject.FindGameObjectWithTag ("RespawnManager").GetComponent<RespawnManager>();
+		m_RespawnManager = GameObject.FindGameObjectWithTag ("RespawnManager").GetComponent<RespawnManager> ();
+		if (m_RespawnManager == null) {
+			m_LobbySpawn = GameObject.FindGameObjectWithTag ("RespawnManager").GetComponent<LobbySpawn> ();
+		}
 	}
 	
 	// Update is called once per frame
@@ -65,7 +69,11 @@ public class Player : MonoBehaviour {
 		//DestroyObject (gameObject);
 		//TODO fix where the player goes 29/01/2016 GlennCullen
 		gameObject.transform.position = new Vector3 (0, -20, 0);
-		m_RespawnManager.StartRespawnTimer (gameObject);
+		if (m_RespawnManager != null) {
+			m_RespawnManager.StartRespawnTimer (gameObject);
+		} else if (m_LobbySpawn != null) {
+			m_LobbySpawn.StartRespawnTimer (gameObject);
+		}
 
 
 	}

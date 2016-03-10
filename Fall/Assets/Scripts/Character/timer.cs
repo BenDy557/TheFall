@@ -9,7 +9,8 @@ public class timer : MonoBehaviour {
 	private GameObject[] players;
 	private bool inLead;
 	private TextMesh timertext;
-	GameObject m_GameManager;
+	public GameObject m_GameManager;
+	private float m_OriginalTime;
 
 
 	// Use this for initialization
@@ -18,6 +19,7 @@ public class timer : MonoBehaviour {
 //		timertext = "";
 		timertext = GetComponentInChildren<TextMesh> ();
         m_GameManager = GameObject.FindGameObjectWithTag("GameManager");
+		m_OriginalTime = timeneeded;
 	}
 	
 	// Update is called once per frame
@@ -61,7 +63,14 @@ public class timer : MonoBehaviour {
 		}
 		timertext.text = timeneeded.ToString ("F2");
 		if (timeneeded <= 0) {
+			if(m_GameManager.GetComponent<GameManager>().m_GameState == GameState.Game)
+			{
             m_GameManager.GetComponent<GameManager>().IWon(transform.name);
+			}
+			else
+			{
+				timeneeded = m_OriginalTime;
+			}
 		}
 	}
 		
