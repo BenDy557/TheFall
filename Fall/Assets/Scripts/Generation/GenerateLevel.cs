@@ -10,6 +10,7 @@ public class GenerateLevel : MonoBehaviour {
 	Transform m_CurrentFocus;
 	public GameObject[] m_Pickup;
 	public float m_Probability = 0.5f;
+	public float m_DeletePrefabsAfter = 30.0f;
 	// Use this for initialization
 	void Start () {
 		SpawnFloor ();
@@ -43,7 +44,7 @@ public class GenerateLevel : MonoBehaviour {
 		                                m_CurrentFocus.transform.position.y + PrefabToSpawn.GetComponent<PrefabScript> ().BoundingBox.transform.localScale.y/2,
 		                                m_CurrentFocus.transform.position.z);
 		GameObject SpawnedObject = (GameObject)Instantiate (PrefabToSpawn, Position, Quaternion.identity);
-
+		Destroy (SpawnedObject, m_DeletePrefabsAfter);
 		m_CurrentFocus.position = new Vector3 (m_CurrentFocus.transform.position.x,
 		                                       SpawnedObject.GetComponent<PrefabScript> ().UpperLimit.transform.position.y + SpawnedObject.GetComponent<PrefabScript> ().UpperLimit.transform.localScale.y,
 		                              m_CurrentFocus.transform.position.z);

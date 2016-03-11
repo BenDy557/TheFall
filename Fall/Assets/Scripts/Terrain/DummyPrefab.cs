@@ -12,7 +12,7 @@ public class DummyPrefab : MonoBehaviour {
 		if (m_RealPrefab) {
 
 			GameObject NewPrefab = (GameObject)Instantiate(m_RealPrefab,gameObject.transform.position,gameObject.transform.rotation);
-
+			NewPrefab.transform.parent = gameObject.transform.parent;
 			if(gameObject.GetComponent<Rotate>())
 			{
 				NewPrefab.AddComponent<Rotate>();
