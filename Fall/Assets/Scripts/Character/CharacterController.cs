@@ -103,8 +103,8 @@ public class CharacterController : MonoBehaviour {
         height = GetComponent<CapsuleCollider>().height * transform.localScale.y;
         m_PlayerState = PlayerState.Idle;
 
-        
-
+        m_SlowTimePlane = GameObject.FindGameObjectWithTag("SlowTimeVignette");
+        m_SlowTimePlane.GetComponent<MeshRenderer>().enabled = false;
         
 		rigidBody = GetComponent<Rigidbody>();
 		height = GetComponent<CapsuleCollider> ().height *transform.localScale.y;
@@ -433,7 +433,7 @@ public class CharacterController : MonoBehaviour {
 
 	IEnumerator TimeSlow(float time)
 	{
-        m_SlowTimePlane.SetActive(true);
+        m_SlowTimePlane.GetComponent<MeshRenderer>().enabled = true;
         
 		timeSlowScaler = 0.5f; 											//DM: sets time slow ratio
 		Time.timeScale = timeSlowScaler;								//sets time scale
@@ -444,7 +444,7 @@ public class CharacterController : MonoBehaviour {
 
 		yield return new WaitForSeconds (time);
 
-        m_SlowTimePlane.SetActive(false);
+        m_SlowTimePlane.GetComponent<MeshRenderer>().enabled = false;
 
 		Time.timeScale = 1.0f;											// reverses all previous effects once powerup timer ends
 		Time.fixedDeltaTime = Time.fixedDeltaTime /	 timeSlowScaler;
