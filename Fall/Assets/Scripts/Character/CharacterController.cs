@@ -49,6 +49,7 @@ public class CharacterController : MonoBehaviour {
     public ParticleSystem m_ParticleSystemWallRightJump;
     public ParticleSystem m_ParticleSystemDoubleJump;
     public ParticleSystem m_ParticleSystemWinning;
+    public GameObject m_SlowTimePlane;
     
 
 	public Animator anim;
@@ -432,6 +433,8 @@ public class CharacterController : MonoBehaviour {
 
 	IEnumerator TimeSlow(float time)
 	{
+        m_SlowTimePlane.SetActive(true);
+        
 		timeSlowScaler = 0.5f; 											//DM: sets time slow ratio
 		Time.timeScale = timeSlowScaler;								//sets time scale
 		Time.fixedDeltaTime = Time.fixedDeltaTime * timeSlowScaler;		// adjusts physics frame rate to account for change in time scale(timeScale dictates how quickly game time passes 
@@ -440,6 +443,8 @@ public class CharacterController : MonoBehaviour {
 		rigidBody.useGravity = false;									// see gravity treatment above
 
 		yield return new WaitForSeconds (time);
+
+        m_SlowTimePlane.SetActive(false);
 
 		Time.timeScale = 1.0f;											// reverses all previous effects once powerup timer ends
 		Time.fixedDeltaTime = Time.fixedDeltaTime /	 timeSlowScaler;
