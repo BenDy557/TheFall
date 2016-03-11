@@ -61,9 +61,10 @@ public class GameManager : MonoBehaviour {
         //if player joined, instantiate play area for player
         //wait until players ready up
         //when all players ready up, load in level with appropriate amount of players
-
-		m_LobySpawns = GameObject.FindGameObjectWithTag ("LobbyRecord").GetComponent<LobbyRecord> ().m_LobySpawns;
-		m_ReadyDisplays = GameObject.FindGameObjectWithTag ("LobbyRecord").GetComponent<LobbyRecord> ().m_ReadyDisplays;
+		if (GameObject.FindGameObjectWithTag ("LobbyRecord").GetComponent<LobbyRecord> () != null) {
+			m_LobySpawns = GameObject.FindGameObjectWithTag ("LobbyRecord").GetComponent<LobbyRecord> ().m_LobySpawns;
+			m_ReadyDisplays = GameObject.FindGameObjectWithTag ("LobbyRecord").GetComponent<LobbyRecord> ().m_ReadyDisplays;
+		}
 		//System.Array.Copy (GameObject.FindGameObjectWithTag ("LobbyRecord").GetComponent<LobbyRecord> ().m_LobySpawns, m_LobySpawns, 4);
 		//GameObject.FindGameObjectWithTag ("LobbyRecord").GetComponent<LobbyRecord> ().m_LobySpawns.CopyTo (m_LobySpawns, 0);
 	}
