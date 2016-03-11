@@ -5,6 +5,8 @@ public class RespawnManager : MonoBehaviour {
 
 	private Camera m_CameraMain;
 
+    public GameObject m_RespawnEffect;
+
 	public float m_RespawnTime = 1.0f;
 	// Use this for initialization
 	void Start () {
@@ -31,10 +33,13 @@ public class RespawnManager : MonoBehaviour {
 				//if (obj.transform.position.x > m_CameraMain.transform.position.x -5 && obj.transform.position.x > m_CameraMain.transform.position.x +5) {
 				if (obj.transform.position.y > m_CameraMain.transform.position.y -5 && obj.transform.position.y < m_CameraMain.transform.position.y +5 && !RespawnSuceeded ) 
 				{
-						// Respawn is on screen
-						Player.GetComponent<Rigidbody> ().velocity = new Vector3 (0, 0, 0);
-						Player.transform.position = obj.transform.position;
-						RespawnSuceeded = true;
+					// Respawn is on screen
+					Player.GetComponent<Rigidbody> ().velocity = new Vector3 (0, 0, 0);
+					Player.transform.position = obj.transform.position;
+
+                    Instantiate(m_RespawnEffect, obj.transform.position + new Vector3(0.0f, -1.0f, 0.0f), obj.transform.rotation);
+
+					RespawnSuceeded = true;
 					Destroy (obj);
 				}
 				else 

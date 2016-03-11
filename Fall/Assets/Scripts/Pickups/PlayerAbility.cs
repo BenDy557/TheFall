@@ -160,7 +160,7 @@ public class PlayerAbility : MonoBehaviour {
             tempSwapPlayer.transform.position = new Vector3(tempCurrentPlayerPosition.x, tempCurrentPlayerPosition.y, tempCurrentPlayerPosition.z);
         }
 
-
+        m_Type = PickupType.empty;
         
     }
 

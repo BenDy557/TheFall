@@ -55,8 +55,10 @@
      <Compile Include="Assets\Scripts\Character\DestructoShot.cs" />
      <Compile Include="Assets\Scripts\Character\MeshColour.cs" />
      <Compile Include="Assets\Scripts\Character\MoveCamera.cs" />
+     <Compile Include="Assets\Scripts\Character\MovementConstant.cs" />
      <Compile Include="Assets\Scripts\Character\Player.cs" />
      <Compile Include="Assets\Scripts\Character\PlayerManager.cs" />
+     <Compile Include="Assets\Scripts\Character\RespawnEffect.cs" />
      <Compile Include="Assets\Scripts\Character\RespawnManager.cs" />
      <Compile Include="Assets\Scripts\Character\Reticule.cs" />
      <Compile Include="Assets\Scripts\Character\ReverseControlsShot.cs" />
@@ -65,6 +67,7 @@
      <Compile Include="Assets\Scripts\Character\bullet.cs" />
      <Compile Include="Assets\Scripts\Character\groundCheck.cs" />
      <Compile Include="Assets\Scripts\Character\timer.cs" />
+     <Compile Include="Assets\Scripts\Debug\ObjectSpawner.cs" />
      <Compile Include="Assets\Scripts\Depreciated\OLD_CharacterController.cs" />
      <Compile Include="Assets\Scripts\Generation\EndTrigger.cs" />
      <Compile Include="Assets\Scripts\Generation\GenerateLevel.cs" />

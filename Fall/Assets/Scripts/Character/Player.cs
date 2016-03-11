@@ -64,7 +64,8 @@ public class Player : MonoBehaviour {
 
 	public void Kill()
 	{
-        Instantiate<GameObject>((GameObject)Resources.Load("Prefabs/DeathEffect"));
+        GameObject temp = Instantiate<GameObject>((GameObject)Resources.Load("Prefabs/DeathEffect"));
+        temp.transform.position = gameObject.transform.position;
         
 		//DestroyObject (gameObject);
 		//TODO fix where the player goes 29/01/2016 GlennCullen
