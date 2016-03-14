@@ -26,10 +26,7 @@ public class Player : MonoBehaviour {
 			Kill ();
 		}
 	
-		if(Input.GetKeyDown(KeyCode.Escape))
-		   {
-			Application.Quit();
-		}
+		
 	}
 
 	void FixedUpdate()

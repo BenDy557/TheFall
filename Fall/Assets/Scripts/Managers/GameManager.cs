@@ -46,7 +46,6 @@ public class GameManager : MonoBehaviour {
 
         for (int i = 0; i < m_Players.Count; i++)
         {
-            Debug.Log(m_Controllers[i]);
             if (m_Controllers[i] == "Wireless Controller")
             {
                 //Ps4controller
@@ -86,10 +85,13 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         if (TransitionState())
         {
-            //Debug.Log("NOTTransitioning");
             m_GameStatePrev = m_GameState;
 
             switch (m_GameState)
@@ -170,7 +172,6 @@ public class GameManager : MonoBehaviour {
                             {
                                 tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Xbox";
                             }
-                            Debug.Log(tempGameObject.GetComponent<CharacterController>().m_ControllerType);
 
 
 						    m_ReadyDisplays[0].ToggleJoined();
@@ -204,7 +205,6 @@ public class GameManager : MonoBehaviour {
                             {
                                 tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Xbox";
                             }
-                            Debug.Log(tempGameObject.GetComponent<CharacterController>().m_ControllerType);
 						
 					        tempGameObject.transform.position = m_LobySpawns[1].position;
 					    }
@@ -235,7 +235,6 @@ public class GameManager : MonoBehaviour {
                             {
                                 tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Xbox";
                             }
-                            Debug.Log(tempGameObject.GetComponent<CharacterController>().m_ControllerType);
 
 					        tempGameObject.transform.position =m_LobySpawns[2].position;
 					    }
@@ -268,11 +267,16 @@ public class GameManager : MonoBehaviour {
                                 tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Xbox";
                             }
 
-                            Debug.Log(tempGameObject.GetComponent<CharacterController>().m_ControllerType);
+                            
 
 
 					        tempGameObject.transform.position =m_LobySpawns[3].position;
 					    }
+                    }
+
+                    if (m_GameFinished)
+                    {
+                        Application.Quit();
                     }
 
                     break;
@@ -283,14 +287,12 @@ public class GameManager : MonoBehaviour {
 
                     if (Input.GetKeyDown(KeyCode.Return))
                     {
-                        //Debug.Log("Loading Game");
                         m_GameState = GameState.Lobby;
                         Application.LoadLevel("Lobby");
                     }
 
                     if (m_GameFinished)
                     {
-                        //Debug.Log("Switching GameState");
                         m_GameState = GameState.Lobby;
                         Application.LoadLevel("Lobby");
 						
@@ -301,8 +303,8 @@ public class GameManager : MonoBehaviour {
 
         }
 
-        
 
+        
 
         if (m_GameStatePrev != m_GameState)
         {
@@ -315,16 +317,13 @@ public class GameManager : MonoBehaviour {
     {
         if (m_Transitioning)
         {
-            //Debug.Log("Transitioning");
 
             switch (m_GameState)
             {
                 case GameState.SplashScreen:
-                    //Debug.Log("GameState"+m_GameState);
                     break;
 
                 case GameState.Lobby:
-                    //Debug.Log("GameState" + m_GameState);
                     if (m_GameStatePrev == GameState.Game)
                     {
                         m_Players.Clear();
@@ -340,7 +339,6 @@ public class GameManager : MonoBehaviour {
                     break;
 
                 case GameState.Game:
-                    //Debug.Log("GameState" + m_GameState);
                     if (m_GameStatePrev == GameState.Lobby)
                     {
                         //Find references
@@ -358,7 +356,6 @@ public class GameManager : MonoBehaviour {
                                     tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (i + 1);
                                     
                                     
-                                    Debug.Log(m_Controllers[i]);
                                     if (m_Controllers[i] == "Wireless Controller")
                                     {
                                         //Ps4controller
@@ -368,7 +365,6 @@ public class GameManager : MonoBehaviour {
                                     {
                                         tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Xbox";
                                     }
-                                    Debug.Log(tempGameObject.GetComponent<CharacterController>().m_ControllerType);
 
 
 
@@ -392,7 +388,6 @@ public class GameManager : MonoBehaviour {
 
     public void IWon(string WinnerName)
     {
-        //Debug.Log(WinnerName + " won! yyyeeeeaa");
 
         m_GameFinished = true;
 

@@ -145,7 +145,6 @@ public class CharacterController : MonoBehaviour {
 			grabPos = rightGrabCheck.position;
 			grabPos.y -= (height / 2)- 0.1f;
 			grabbingRight = Physics.Linecast (transform.position, grabPos, 1 << LayerMask.NameToLayer ("Ground"));
-			//Debug.Log(grabPos.y);
 		}
 		//stop players getting stuck at "steps"
 		if((grounded&&grabbingLeft || grounded&&grabbingRight)) {
@@ -241,6 +240,12 @@ public class CharacterController : MonoBehaviour {
         }
 
 
+
+        if (Input.GetButtonDown(m_ControllerType + name + "Exit")) 
+        {
+            GameObject tempGameObject = GameObject.FindGameObjectWithTag("GameManager");
+            tempGameObject.GetComponent<GameManager>().IWon("Nobody");
+        }
 	}
 	
 	void FixedUpdate()
