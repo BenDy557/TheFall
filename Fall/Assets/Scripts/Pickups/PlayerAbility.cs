@@ -6,6 +6,7 @@ public class PlayerAbility : MonoBehaviour {
     public PickupType m_Type;
 
     private string m_PlayerNumber;
+    private string m_ControllerType;
 	private GameObject[] players;
 	private GameObject m_UIManager;
 	int m_ID;
@@ -20,12 +21,13 @@ public class PlayerAbility : MonoBehaviour {
         m_Type = PickupType.empty;
         m_PlayerNumber = gameObject.GetComponent<CharacterController>().name;
 		m_ID = gameObject.GetComponent<CharacterController>().m_PlayerNumber;
+        m_ControllerType = gameObject.GetComponent<CharacterController>().m_ControllerType;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetButtonDown(m_PlayerNumber + "Ability"))
+        if (Input.GetButtonDown(m_ControllerType + m_PlayerNumber + "Ability"))
         {
             ActivateAbility();
         }
