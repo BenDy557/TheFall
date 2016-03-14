@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour {
     //Game
     private List<GameObject> m_Players = new List<GameObject>();
     [SerializeField] private GameObject m_LevelGenerator;
-    bool m_GameFinished;
+    public bool m_GameFinished;
 
 	// Use this for initialization
 	void Start ()
@@ -304,11 +304,11 @@ public class GameManager : MonoBehaviour {
     }
 
 
-    public void IWon(string WinnerName)
+    public void IWon(Color WinnerColor, string WinnerName)
     {
         //Debug.Log(WinnerName + " won! yyyeeeeaa");
-
-        m_GameFinished = true;
+		GameObject.FindGameObjectWithTag ("UICountdown").GetComponent<UICountdown>().UIWin(WinnerColor, WinnerName);
+        //m_GameFinished = true;
 
     }
 }
