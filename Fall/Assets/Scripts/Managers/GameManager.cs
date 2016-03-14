@@ -393,4 +393,16 @@ public class GameManager : MonoBehaviour {
         //m_GameFinished = true;
 
     }
+
+    public void ExitGame()
+    {
+        if (m_GameState == GameState.Game)
+        {
+            GameObject.FindGameObjectWithTag("UICountdown").GetComponent<UICountdown>().UIWin(Color.magenta, "Nobody Wins");
+        }
+        else if (m_GameState == GameState.Lobby)
+        {
+            Application.Quit();
+        }
+    }
 }

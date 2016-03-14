@@ -249,7 +249,7 @@ public class CharacterController : MonoBehaviour {
         if (Input.GetButtonDown(m_ControllerType + name + "Exit")) 
         {
             GameObject tempGameObject = GameObject.FindGameObjectWithTag("GameManager");
-            tempGameObject.GetComponent<GameManager>().IWon("Nobody");
+            tempGameObject.GetComponent<GameManager>().ExitGame();
         }
 	}
 	
