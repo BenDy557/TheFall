@@ -13,6 +13,7 @@ public class CharacterController : MonoBehaviour {
 	public PlayerState m_PlayerState;
     
 	public string name;
+    public string m_ControllerType;
     public int m_PlayerNumber;
 	public float moveForce = 100;
 	public float jumpForce = 1000f;
@@ -117,7 +118,6 @@ public class CharacterController : MonoBehaviour {
 
 		fixeddeltatime = Time.fixedDeltaTime;
 
-
     }
 
 
@@ -150,7 +150,6 @@ public class CharacterController : MonoBehaviour {
 			grabPos = rightGrabCheck.position;
 			grabPos.y -= (height / 2)- 0.1f;
 			grabbingRight = Physics.Linecast (transform.position, grabPos, 1 << LayerMask.NameToLayer ("Ground"));
-			//Debug.Log(grabPos.y);
 		}
 		//stop players getting stuck at "steps"
 		if((grounded&&grabbingLeft || grounded&&grabbingRight)) {
@@ -158,16 +157,19 @@ public class CharacterController : MonoBehaviour {
 		}
 
 		//set jump values
-		if (Input.GetButtonDown (name+"Jump") && grounded) {
+        if (Input.GetButtonDown(m_ControllerType + name + "Jump") && grounded)
+        {
 			jump = true;
 		}
-		else if (Input.GetButtonDown (name+"Jump") && grabbingLeft) {
+        else if (Input.GetButtonDown(m_ControllerType + name + "Jump") && grabbingLeft)
+        {
 			jumpRight= true;
 		}
-		else if (Input.GetButtonDown (name+"Jump") && grabbingRight) {
+        else if (Input.GetButtonDown(m_ControllerType + name + "Jump") && grabbingRight)
+        {
 			jumpLeft = true;
 		}
-		else if (Input.GetButtonDown (name+"Jump") && m_DoubleJumpAvailable)
+        else if (Input.GetButtonDown(m_ControllerType + name + "Jump") && m_DoubleJumpAvailable)
 		{
 			m_DoubleJump = true;
 			m_DoubleJumpAvailable = false;
@@ -243,11 +245,17 @@ public class CharacterController : MonoBehaviour {
         }
 
 
+
+        if (Input.GetButtonDown(m_ControllerType + name + "Exit")) 
+        {
+            GameObject tempGameObject = GameObject.FindGameObjectWithTag("GameManager");
+            tempGameObject.GetComponent<GameManager>().IWon("Nobody");
+        }
 	}
 	
 	void FixedUpdate()
 	{
-		float h = Input.GetAxis (name + "LeftStickX");
+		float h = Input.GetAxis (m_ControllerType + name + "LeftStickX");
 
 		//reverse controls effect
 		if (isReversed) {

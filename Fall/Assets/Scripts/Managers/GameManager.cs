@@ -41,7 +41,21 @@ public class GameManager : MonoBehaviour {
         
         //How many controllers are connected?
         m_Controllers = Input.GetJoystickNames();
+        //m_ControllersType = Input.GetJoystickNames();
         m_ControllerAmount = m_Controllers.GetLength(0);
+
+        for (int i = 0; i < m_Players.Count; i++)
+        {
+            if (m_Controllers[i] == "Wireless Controller")
+            {
+                //Ps4controller
+                m_Players[i].GetComponent<CharacterController>().m_ControllerType = "Ps";
+            }
+            else
+            {
+                m_Players[i].GetComponent<CharacterController>().m_ControllerType = "Xbox";
+            }
+        }
 
         //Splash Screen
 
@@ -71,10 +85,13 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         if (TransitionState())
         {
-            //Debug.Log("NOTTransitioning");
             m_GameStatePrev = m_GameState;
 
             switch (m_GameState)
@@ -124,8 +141,11 @@ public class GameManager : MonoBehaviour {
                         Application.LoadLevel("MainScene");
                     }
 
+                   
                     //listen for all input to see if player wants to join game
-                    if (Input.GetButtonDown("Player1Start"))//|| (Input.GetAxis("PlaystationPlayer1ButtonX") > 0))
+
+                    if ((m_Controllers[0] != "Wireless Controller" && Input.GetButtonDown("XboxPlayer1Start"))
+                     || (m_Controllers[0] == "Wireless Controller" && Input.GetButtonDown("PsPlayer1Start")))
                     {
                         //Log player as wanting to join game
                         if (m_PlayersSet[0])
@@ -134,19 +154,34 @@ public class GameManager : MonoBehaviour {
 							m_ReadyDisplays[0].ToggleReady();
                             
                         }
-                        else{
-                        m_PlayersSet[0] = true;
+                        else
+                        {
+                            m_PlayersSet[0] = true;
 				
-						GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
+						    GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
+
+
+						    tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (1);
+
+                            if (m_Controllers[0] == "Wireless Controller")
+                            {
+                                //Ps4controller
+                                tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Ps";
+                            }
+                            else
+                            {
+                                tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Xbox";
+                            }
+
+
+						    m_ReadyDisplays[0].ToggleJoined();
 						
-						tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (1);
-						m_ReadyDisplays[0].ToggleJoined();
-						
-						tempGameObject.transform.position = m_LobySpawns[0].position;
-					}
+						    tempGameObject.transform.position = m_LobySpawns[0].position;
+					    }
                     }
 
-				if (Input.GetButtonDown("Player2Start")) //|| (Input.GetAxis("PlaystationPlayer2ButtonX") > 0))
+                    if ((m_Controllers[1] != "Wireless Controller" && Input.GetButtonDown("XboxPlayer2Start"))
+                     || (m_Controllers[1] == "Wireless Controller" && Input.GetButtonDown("PsPlayer2Start")))
                     {
                         //CreatePlayer2
                         if (m_PlayersSet[1])
@@ -154,19 +189,29 @@ public class GameManager : MonoBehaviour {
                             m_PlayersReady[1] = true;
 							m_ReadyDisplays[1].ToggleReady();
                         }
-					else{
-                        m_PlayersSet[1] = true;
-						GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
-						m_ReadyDisplays[1].ToggleJoined();
-						tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (2);
+					    else
+                        {
+                            m_PlayersSet[1] = true;
+						    GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
+						    m_ReadyDisplays[1].ToggleJoined();
+						    tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (2);
+
+                            if (m_Controllers[1] == "Wireless Controller")
+                            {
+                                //Ps4controller
+                                tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Ps";
+                            }
+                            else
+                            {
+                                tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Xbox";
+                            }
 						
-						
-					tempGameObject.transform.position = m_LobySpawns[1].position;
-			
-					}
+					        tempGameObject.transform.position = m_LobySpawns[1].position;
+					    }
                     }
 
-				if (Input.GetButtonDown("Player3Start")) //|| (Input.GetAxis("PlaystationPlayer2ButtonX") > 0))
+                    if ((m_Controllers[2] != "Wireless Controller" && Input.GetButtonDown("XboxPlayer3Start"))
+                     || (m_Controllers[2] == "Wireless Controller" && Input.GetButtonDown("PsPlayer3Start")))
                     {
                         //CreatePlayer3
                         if (m_PlayersSet[2])
@@ -174,19 +219,30 @@ public class GameManager : MonoBehaviour {
                             m_PlayersReady[2] = true;
 							m_ReadyDisplays[2].ToggleReady();
                         }
-					else {
-                        m_PlayersSet[2] = true;
-						GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
-						m_ReadyDisplays[2].ToggleJoined();
-						tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (3);
-						
-						
-					tempGameObject.transform.position =m_LobySpawns[2].position;
-					}
+					    else 
+                        {
+                            m_PlayersSet[2] = true;
+						    GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
+						    m_ReadyDisplays[2].ToggleJoined();
+						    tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (3);
+
+                            if (m_Controllers[2] == "Wireless Controller")
+                            {
+                                //Ps4controller
+                                tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Ps";
+                            }
+                            else
+                            {
+                                tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Xbox";
+                            }
+
+					        tempGameObject.transform.position =m_LobySpawns[2].position;
+					    }
 						
                     }
 
-				if (Input.GetButtonDown("Player4Start")) //|| (Input.GetAxis("PlaystationPlayer2ButtonX") > 0))
+                    if ((m_Controllers[3] != "Wireless Controller" && Input.GetButtonDown("XboxPlayer4Start"))
+                     || (m_Controllers[3] == "Wireless Controller" && Input.GetButtonDown("PsPlayer4Start")))
                     {
                         //CreatePlayer4
                         if (m_PlayersSet[3])
@@ -194,13 +250,33 @@ public class GameManager : MonoBehaviour {
                             m_PlayersReady[3] = true;
 							m_ReadyDisplays[3].ToggleReady();
                         }
-					else{
-                        m_PlayersSet[3] = true;
-						GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
-						m_ReadyDisplays[3].ToggleJoined();
-						tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (4);
-					tempGameObject.transform.position =m_LobySpawns[3].position;
-					}
+					    else
+                        {
+                            m_PlayersSet[3] = true;
+						    GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
+						    m_ReadyDisplays[3].ToggleJoined();
+						    tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (4);
+
+                            if (m_Controllers[3] == "Wireless Controller")
+                            {
+                                //Ps4controller
+                                tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Ps";
+                            }
+                            else
+                            {
+                                tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Xbox";
+                            }
+
+                            
+
+
+					        tempGameObject.transform.position =m_LobySpawns[3].position;
+					    }
+                    }
+
+                    if (m_GameFinished)
+                    {
+                        Application.Quit();
                     }
 
                     break;
@@ -211,14 +287,12 @@ public class GameManager : MonoBehaviour {
 
                     if (Input.GetKeyDown(KeyCode.Return))
                     {
-                        //Debug.Log("Loading Game");
                         m_GameState = GameState.Lobby;
                         Application.LoadLevel("Lobby");
                     }
 
                     if (m_GameFinished)
                     {
-                        //Debug.Log("Switching GameState");
                         m_GameState = GameState.Lobby;
                         Application.LoadLevel("Lobby");
 						
@@ -229,8 +303,8 @@ public class GameManager : MonoBehaviour {
 
         }
 
-        
 
+        
 
         if (m_GameStatePrev != m_GameState)
         {
@@ -243,16 +317,13 @@ public class GameManager : MonoBehaviour {
     {
         if (m_Transitioning)
         {
-            //Debug.Log("Transitioning");
 
             switch (m_GameState)
             {
                 case GameState.SplashScreen:
-                    //Debug.Log("GameState"+m_GameState);
                     break;
 
                 case GameState.Lobby:
-                    //Debug.Log("GameState" + m_GameState);
                     if (m_GameStatePrev == GameState.Game)
                     {
                         m_Players.Clear();
@@ -268,7 +339,6 @@ public class GameManager : MonoBehaviour {
                     break;
 
                 case GameState.Game:
-                    //Debug.Log("GameState" + m_GameState);
                     if (m_GameStatePrev == GameState.Lobby)
                     {
                         //Find references
@@ -284,6 +354,18 @@ public class GameManager : MonoBehaviour {
                                     GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
 
                                     tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (i + 1);
+                                    
+                                    
+                                    if (m_Controllers[i] == "Wireless Controller")
+                                    {
+                                        //Ps4controller
+                                        tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Ps";
+                                    }
+                                    else
+                                    {
+                                        tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Xbox";
+                                    }
+
 
 
                                     tempGameObject.transform.position = m_LevelGenerator.GetComponent<GenerateLevel>().m_StartPoint.transform.position;
