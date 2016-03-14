@@ -49,9 +49,10 @@ public class CharacterController : MonoBehaviour {
     public ParticleSystem m_ParticleSystemWallRightJump;
     public ParticleSystem m_ParticleSystemDoubleJump;
     public ParticleSystem m_ParticleSystemWinning;
+	public ParticleSystem m_ParticleSystemReverse;
     public GameObject m_SlowTimePlane;
     
-
+	public Color m_PlayerColor;
 	public Animator anim;
 	public GameObject Model;
 	private float maxSpeed = 100f;
@@ -75,18 +76,22 @@ public class CharacterController : MonoBehaviour {
             case 1:
                 name = "Player1";
                 GetComponent<MeshColour>().ColourizeMesh(MeshColour.PlayerColour.Red);
+		 		m_PlayerColor = new Color(122,7,7);
                 break;
             case 2:
                 name = "Player2";
                 GetComponent<MeshColour>().ColourizeMesh(MeshColour.PlayerColour.Blue);
+				m_PlayerColor = new Color(0,0,255);
                 break;
             case 3:
                 name = "Player3";
                 GetComponent<MeshColour>().ColourizeMesh(MeshColour.PlayerColour.Green);
+				m_PlayerColor = new Color(0,255,0);
                 break;
             case 4:
                 name = "Player4";
                 GetComponent<MeshColour>().ColourizeMesh(MeshColour.PlayerColour.Yellow);
+				m_PlayerColor = new Color(255,189,0);
                 break;
             default:
                 name = "InvalidPlayerNumber";
@@ -422,7 +427,9 @@ public class CharacterController : MonoBehaviour {
 	IEnumerator ReversedControls(float time)
 	{
 		isReversed=true;
+		m_ParticleSystemReverse.enableEmission = true;
 		yield return new WaitForSeconds(time);
+		m_ParticleSystemReverse.enableEmission = false;
 		isReversed=false;
 	}
 

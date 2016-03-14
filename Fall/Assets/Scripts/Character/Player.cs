@@ -5,7 +5,7 @@ public class Player : MonoBehaviour {
 	public float hDrag = 3;
 	public float lDrag = 1;
 	bool highDrag = false;
-
+	public bool m_Immune = false;
     
 
 	private RespawnManager m_RespawnManager;
@@ -77,5 +77,22 @@ public class Player : MonoBehaviour {
 		}
 
 
+	}
+
+	public void ActivateImmunity(float time)
+	{
+		StartCoroutine (BecomeImmune (time));
+	}
+
+	IEnumerator BecomeImmune(float time)
+	{
+		m_Immune = true;
+		Color tempColor = GetComponent<MeshColour> ().m_CurrentMaterial.color;
+		tempColor.a = 0.5f;
+		tempColor = GetComponent<MeshColour> ().m_CurrentMaterial.color = tempColor;
+		yield return new WaitForSeconds (time);
+		tempColor.a = 1f;
+		tempColor = GetComponent<MeshColour> ().m_CurrentMaterial.color = tempColor;
+		m_Immune = false;
 	}
 }

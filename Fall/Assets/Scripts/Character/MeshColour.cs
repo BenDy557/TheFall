@@ -13,7 +13,7 @@ public class MeshColour : MonoBehaviour {
     public Material m_Blue;
     public Material m_Green;
     public Material m_Yellow;
-    private Material m_CurrentMaterial;
+    public Material m_CurrentMaterial;
 
 	// Use this for initialization
 	void Start ()

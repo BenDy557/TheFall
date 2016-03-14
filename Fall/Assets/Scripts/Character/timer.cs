@@ -65,7 +65,7 @@ public class timer : MonoBehaviour {
 		if (timeneeded <= 0) {
 			if(m_GameManager.GetComponent<GameManager>().m_GameState == GameState.Game)
 			{
-            m_GameManager.GetComponent<GameManager>().IWon(transform.name);
+            m_GameManager.GetComponent<GameManager>().IWon(gameObject.GetComponent<CharacterController>().m_PlayerColor, transform.name);
 			}
 			else
 			{
