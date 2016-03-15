@@ -29,6 +29,7 @@ public class LobbySpawn : MonoBehaviour {
 
 	private void NeedRespawn(GameObject Player)
 	{
+        Player.GetComponent<Player>().m_IsAlive = true;
 		Player.transform.position = m_LobbySpawns[Player.GetComponent<CharacterController>().m_PlayerNumber-1].position;
 	}
 }

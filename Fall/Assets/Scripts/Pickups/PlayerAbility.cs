@@ -194,6 +194,7 @@ public class PlayerAbility : MonoBehaviour {
         }
         else
         {
+            m_Type = PickupType.empty;
             return true;
         }
 
@@ -206,7 +207,7 @@ public class PlayerAbility : MonoBehaviour {
         m_CurrentPlayer.transform.position = new Vector3(m_SwapPlayer.transform.position.x,m_SwapPlayer.transform.position.y,m_SwapPlayer.transform.position.z);
         m_SwapPlayer.transform.position = new Vector3(tempCurrentPlayerPosition.x, tempCurrentPlayerPosition.y, tempCurrentPlayerPosition.z);
 
-        m_Type = PickupType.empty;
+        
         
     }
 
@@ -219,11 +220,18 @@ public class PlayerAbility : MonoBehaviour {
         Destroy(m_PlayerOneParticles);
         Destroy(m_PlayerTwoParticles);
 
-        GameObject tempGameObject = (GameObject)Instantiate(m_SwapParticlesEnd, m_CurrentPlayer.transform.position, m_CurrentPlayer.transform.rotation);
-        GameObject tempGameObjectTwo =(GameObject)Instantiate(m_SwapParticlesEnd, m_SwapPlayer.transform.position, m_SwapPlayer.transform.rotation);
-        Destroy(tempGameObject, 2.0f);
-        Destroy(tempGameObjectTwo, 2.0f);
         
-        SwapPlayer();
+
+        if (m_CurrentPlayer.GetComponent<Player>().m_IsAlive && m_SwapPlayer.GetComponent<Player>().m_IsAlive)
+        {
+            GameObject tempGameObject = (GameObject)Instantiate(m_SwapParticlesEnd, m_CurrentPlayer.transform.position, m_CurrentPlayer.transform.rotation);
+            GameObject tempGameObjectTwo = (GameObject)Instantiate(m_SwapParticlesEnd, m_SwapPlayer.transform.position, m_SwapPlayer.transform.rotation);
+            Destroy(tempGameObject, 2.0f);
+            Destroy(tempGameObjectTwo, 2.0f); 
+            
+            SwapPlayer();
+
+
+        }
     }
 }

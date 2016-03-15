@@ -6,7 +6,7 @@ public class Player : MonoBehaviour {
 	public float lDrag = 1;
 	bool highDrag = false;
 	public bool m_Immune = false;
-    
+    public bool m_IsAlive = true;
 
 	private RespawnManager m_RespawnManager;
 	private LobbySpawn m_LobbySpawn;
@@ -63,21 +63,24 @@ public class Player : MonoBehaviour {
 	{
         GameObject temp = Instantiate<GameObject>((GameObject)Resources.Load("Prefabs/DeathEffect"));
         temp.transform.position = gameObject.transform.position;
-        
+                
 		//DestroyObject (gameObject);
 		//TODO fix where the player goes 29/01/2016 GlennCullen
 		gameObject.transform.position = new Vector3 (0, -20, 0);
+        m_IsAlive = false;
 		if (m_RespawnManager != null) {
 			m_RespawnManager.StartRespawnTimer (gameObject);
 		} else if (m_LobbySpawn != null) {
 			m_LobbySpawn.StartRespawnTimer (gameObject);
 		}
 
+        
 
 	}
 
 	public void ActivateImmunity(float time)
 	{
+        m_IsAlive = true;
 		StartCoroutine (BecomeImmune (time));
 	}
 
