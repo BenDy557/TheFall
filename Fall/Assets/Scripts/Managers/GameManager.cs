@@ -13,10 +13,11 @@ public class GameManager : MonoBehaviour {
     private bool m_Transitioning;
 	public Transform[] m_LobySpawns;
 	public ReadyDisplay[] m_ReadyDisplays;
-    [SerializeField] private string[] m_Controllers;
-    [SerializeField] private int m_ControllerAmount;
-
+    
     private static int m_MaxPlayers = 4;
+
+    [SerializeField]    private string[] m_Controllers = new string[m_MaxPlayers];
+    [SerializeField]    private int m_ControllerAmount;
 
     //SplashScreen
 
@@ -42,7 +43,9 @@ public class GameManager : MonoBehaviour {
         //How many controllers are connected?
         m_Controllers = Input.GetJoystickNames();
         //m_ControllersType = Input.GetJoystickNames();
-        m_ControllerAmount = m_Controllers.GetLength(0);
+        m_ControllerAmount = Input.GetJoystickNames().Length;
+
+        
 
         for (int i = 0; i < m_Players.Count; i++)
         {
@@ -85,6 +88,27 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
+        //INPUT///////////////////////////////////////////
+        ///////////////////////////////////////////INPUT//
+         //How many controllers are connected?
+        m_Controllers = Input.GetJoystickNames();
+        //m_ControllersType = Input.GetJoystickNames();
+        m_ControllerAmount = Input.GetJoystickNames().Length;
+        for (int i = 0; i < m_Players.Count; i++)
+        {
+            if (m_Controllers[i] == "Wireless Controller")
+            {
+                //Ps4controller
+                m_Players[i].GetComponent<CharacterController>().m_ControllerType = "Ps";
+            }
+            else
+            {
+                m_Players[i].GetComponent<CharacterController>().m_ControllerType = "Xbox";
+            }
+        }
+
+
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
@@ -144,136 +168,146 @@ public class GameManager : MonoBehaviour {
                    
                     //listen for all input to see if player wants to join game
 
-                    if ((m_Controllers[0] != "Wireless Controller" && Input.GetButtonDown("XboxPlayer1Start"))
-                     || (m_Controllers[0] == "Wireless Controller" && Input.GetButtonDown("PsPlayer1Start")))
+                    if(m_Controllers.Length >0)
                     {
-                        //Log player as wanting to join game
-                        if (m_PlayersSet[0])
+
+                        if ((m_Controllers[0] != "Wireless Controller" && Input.GetButtonDown("XboxPlayer1Start"))
+                         || (m_Controllers[0] == "Wireless Controller" && Input.GetButtonDown("PsPlayer1Start")))
                         {
-                            m_PlayersReady[0] = true;
-							m_ReadyDisplays[0].ToggleReady();
+                            //Log player as wanting to join game
+                            if (m_PlayersSet[0])
+                            {
+                                m_PlayersReady[0] = true;
+							    m_ReadyDisplays[0].ToggleReady();
                             
-                        }
-                        else
-                        {
-                            m_PlayersSet[0] = true;
+                            }
+                            else
+                            {
+                                m_PlayersSet[0] = true;
 				
-						    GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
+						        GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
 
 
-						    tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (1);
+						        tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (1);
 
-                            if (m_Controllers[0] == "Wireless Controller")
-                            {
-                                //Ps4controller
-                                tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Ps";
-                            }
-                            else
-                            {
-                                tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Xbox";
-                            }
+                                if (m_Controllers[0] == "Wireless Controller")
+                                {
+                                    //Ps4controller
+                                    tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Ps";
+                                }
+                                else
+                                {
+                                    tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Xbox";
+                                }
 
 
-						    m_ReadyDisplays[0].ToggleJoined();
+						        m_ReadyDisplays[0].ToggleJoined();
 						
-						    tempGameObject.transform.position = m_LobySpawns[0].position;
-					    }
-                    }
-
-                    if ((m_Controllers[1] != "Wireless Controller" && Input.GetButtonDown("XboxPlayer2Start"))
-                     || (m_Controllers[1] == "Wireless Controller" && Input.GetButtonDown("PsPlayer2Start")))
-                    {
-                        //CreatePlayer2
-                        if (m_PlayersSet[1])
-                        {
-                            m_PlayersReady[1] = true;
-							m_ReadyDisplays[1].ToggleReady();
+						        tempGameObject.transform.position = m_LobySpawns[0].position;
+					        }
                         }
-					    else
+                    }
+                    if (m_Controllers.Length > 1)
+                    {
+                        if ((m_Controllers[1] != "Wireless Controller" && Input.GetButtonDown("XboxPlayer2Start"))
+                         || (m_Controllers[1] == "Wireless Controller" && Input.GetButtonDown("PsPlayer2Start"))) 
                         {
-                            m_PlayersSet[1] = true;
-						    GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
-						    m_ReadyDisplays[1].ToggleJoined();
-						    tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (2);
-
-                            if (m_Controllers[1] == "Wireless Controller")
+                            //CreatePlayer2
+                            if (m_PlayersSet[1])
                             {
-                                //Ps4controller
-                                tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Ps";
+                                m_PlayersReady[1] = true;
+                                m_ReadyDisplays[1].ToggleReady();
                             }
                             else
                             {
-                                tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Xbox";
+                                m_PlayersSet[1] = true;
+                                GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
+                                m_ReadyDisplays[1].ToggleJoined();
+                                tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (2);
+
+                                if (m_Controllers[1] == "Wireless Controller")
+                                {
+                                    //Ps4controller
+                                    tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Ps";
+                                }
+                                else
+                                {
+                                    tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Xbox";
+                                }
+
+                                tempGameObject.transform.position = m_LobySpawns[1].position;
                             }
-						
-					        tempGameObject.transform.position = m_LobySpawns[1].position;
-					    }
-                    }
-
-                    if ((m_Controllers[2] != "Wireless Controller" && Input.GetButtonDown("XboxPlayer3Start"))
-                     || (m_Controllers[2] == "Wireless Controller" && Input.GetButtonDown("PsPlayer3Start")))
-                    {
-                        //CreatePlayer3
-                        if (m_PlayersSet[2])
-                        {
-                            m_PlayersReady[2] = true;
-							m_ReadyDisplays[2].ToggleReady();
                         }
-					    else 
+                    }
+                    if (m_Controllers.Length > 2)
+                    {
+                        if ((m_Controllers[2] != "Wireless Controller" && Input.GetButtonDown("XboxPlayer3Start"))
+                         || (m_Controllers[2] == "Wireless Controller" && Input.GetButtonDown("PsPlayer3Start")))
                         {
-                            m_PlayersSet[2] = true;
-						    GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
-						    m_ReadyDisplays[2].ToggleJoined();
-						    tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (3);
-
-                            if (m_Controllers[2] == "Wireless Controller")
+                            //CreatePlayer3
+                            if (m_PlayersSet[2])
                             {
-                                //Ps4controller
-                                tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Ps";
+                                m_PlayersReady[2] = true;
+                                m_ReadyDisplays[2].ToggleReady();
                             }
                             else
                             {
-                                tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Xbox";
+                                m_PlayersSet[2] = true;
+                                GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
+                                m_ReadyDisplays[2].ToggleJoined();
+                                tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (3);
+
+                                if (m_Controllers[2] == "Wireless Controller")
+                                {
+                                    //Ps4controller
+                                    tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Ps";
+                                }
+                                else
+                                {
+                                    tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Xbox";
+                                }
+
+                                tempGameObject.transform.position = m_LobySpawns[2].position;
                             }
 
-					        tempGameObject.transform.position =m_LobySpawns[2].position;
-					    }
-						
+                        }
                     }
 
-                    if ((m_Controllers[3] != "Wireless Controller" && Input.GetButtonDown("XboxPlayer4Start"))
-                     || (m_Controllers[3] == "Wireless Controller" && Input.GetButtonDown("PsPlayer4Start")))
+                    if (m_Controllers.Length > 3)
                     {
-                        //CreatePlayer4
-                        if (m_PlayersSet[3])
+                        if ((m_Controllers[3] != "Wireless Controller" && Input.GetButtonDown("XboxPlayer4Start"))
+                         || (m_Controllers[3] == "Wireless Controller" && Input.GetButtonDown("PsPlayer4Start")))
                         {
-                            m_PlayersReady[3] = true;
-							m_ReadyDisplays[3].ToggleReady();
-                        }
-					    else
-                        {
-                            m_PlayersSet[3] = true;
-						    GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
-						    m_ReadyDisplays[3].ToggleJoined();
-						    tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (4);
-
-                            if (m_Controllers[3] == "Wireless Controller")
+                            //CreatePlayer4
+                            if (m_PlayersSet[3])
                             {
-                                //Ps4controller
-                                tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Ps";
+                                m_PlayersReady[3] = true;
+                                m_ReadyDisplays[3].ToggleReady();
                             }
                             else
                             {
-                                tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Xbox";
+                                m_PlayersSet[3] = true;
+                                GameObject tempGameObject = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/PlayerDefault"));
+                                m_ReadyDisplays[3].ToggleJoined();
+                                tempGameObject.GetComponent<CharacterController>().m_PlayerNumber = (4);
+
+                                if (m_Controllers[3] == "Wireless Controller")
+                                {
+                                    //Ps4controller
+                                    tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Ps";
+                                }
+                                else
+                                {
+                                    tempGameObject.GetComponent<CharacterController>().m_ControllerType = "Xbox";
+                                }
+
+
+
+
+                                tempGameObject.transform.position = m_LobySpawns[3].position;
                             }
-
-                            
-
-
-					        tempGameObject.transform.position =m_LobySpawns[3].position;
-					    }
+                        }
                     }
-
                     if (m_GameFinished)
                     {
                         Application.Quit();
