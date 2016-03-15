@@ -14,9 +14,21 @@ public class PlayerAbility : MonoBehaviour {
 	[SerializeField] private float m_DoubleJumpDuration = 5.0f;
 	public ParticleSystem m_PulseEmmiter;
     public float m_SwapChargeUpTime = 2.0f;
+    public float m_SwapTimer;
+    private bool m_CurrentlySwapping;
+    public AnimationCurve m_SwapXFactor;
+    public AnimationCurve m_SwapYFactor;
+    private GameObject m_CurrentPlayer;
+    private GameObject m_SwapPlayer;
+    public GameObject m_SwapParticles;
+    public GameObject m_SwapParticlesEnd;
+    private GameObject m_PlayerOneParticles;
+    private GameObject m_PlayerTwoParticles;
 
 	// Use this for initialization
 	void Start () {
+        m_SwapTimer = m_SwapChargeUpTime;
+
 		m_UIManager = GameObject.FindGameObjectWithTag ("UIManager");
         m_Type = PickupType.empty;
         m_PlayerNumber = gameObject.GetComponent<CharacterController>().name;
@@ -25,13 +37,30 @@ public class PlayerAbility : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+    {
 
         if (Input.GetButtonDown(m_ControllerType + m_PlayerNumber + "Ability"))
         {
             ActivateAbility();
         }
 
+        if (m_CurrentlySwapping)
+        {
+            float tempX = m_CurrentPlayer.transform.position.x - m_SwapPlayer.transform.position.x;
+            float tempY = m_CurrentPlayer.transform.position.y - m_SwapPlayer.transform.position.y;
+
+            float tempPlayerOneFactorX = m_SwapXFactor.Evaluate(((float)m_SwapTimer / (float)m_SwapChargeUpTime));
+            float tempPlayerOneFactorY = m_SwapYFactor.Evaluate(((float)m_SwapTimer / (float)m_SwapChargeUpTime));
+
+            m_PlayerOneParticles.transform.position = new Vector3((tempPlayerOneFactorX * -tempX) + m_CurrentPlayer.transform.position.x
+                                                                 , (tempPlayerOneFactorY * -tempY) + m_CurrentPlayer.transform.position.y);
+
+            m_PlayerTwoParticles.transform.position = new Vector3((tempPlayerOneFactorX * tempX) + m_SwapPlayer.transform.position.x
+                                                                 , (tempPlayerOneFactorY * tempY) + m_SwapPlayer.transform.position.y);
+
+            m_SwapTimer -= Time.deltaTime;
+        }
 	}
 
     void ActivateAbility()
@@ -42,7 +71,15 @@ public class PlayerAbility : MonoBehaviour {
                 
                 break;
             case PickupType.leaderSwap:
-                StartCoroutine(SwapChargeUp());
+                if (SetSwapPlayers())
+                {
+                    m_SwapTimer = m_SwapChargeUpTime;
+                    m_PlayerOneParticles = (GameObject)Instantiate(m_SwapParticles, m_CurrentPlayer.transform.position, m_CurrentPlayer.transform.rotation);
+                    m_PlayerTwoParticles = (GameObject)Instantiate(m_SwapParticles, m_SwapPlayer.transform.position, m_SwapPlayer.transform.rotation);
+                    StartCoroutine(SwapChargeUp());
+                }
+                
+                
                 break;
             case PickupType.phaseBlock:
                 //Debug.Log("Phase");
@@ -115,6 +152,7 @@ public class PlayerAbility : MonoBehaviour {
 		}
 		m_Type = PickupType.empty;
 	}
+
 	public void ChangePickup(PickupType type)
 	{
 		m_Type = type;
@@ -126,42 +164,47 @@ public class PlayerAbility : MonoBehaviour {
 		m_UIManager.GetComponent<UIPlayerDisplay> ().ClearPower (m_ID);
 	}
 
-    void SwapPlayer()
+    bool SetSwapPlayers()
     {
         players = new GameObject[0];
         players = GameObject.FindGameObjectsWithTag("Player");
 
-        GameObject tempCurrentPlayer;
-        GameObject tempSwapPlayer;
-        tempCurrentPlayer = new GameObject();
-        tempSwapPlayer = new GameObject();
+
+        m_CurrentPlayer = new GameObject();
+        m_SwapPlayer = new GameObject();
         float tempHighest = 0.0f;
 
-        for(int i = 0;i<players.Length;i++)
+        for (int i = 0; i < players.Length; i++)
         {
             if (players[i].transform.position.y > tempHighest)
             {
                 tempHighest = players[i].transform.position.y;
-                tempSwapPlayer = players[i];
+                m_SwapPlayer = players[i];
             }
 
             if (players[i].GetComponent<CharacterController>().name == m_PlayerNumber)
             {
-                tempCurrentPlayer = players[i];
+                m_CurrentPlayer = players[i];
             }
         }
 
-        if (tempCurrentPlayer == tempSwapPlayer)
+        if (m_CurrentPlayer == m_SwapPlayer)//Cant swap withself
         {
-            //highest is with power up
-            //dont use it
+            return false;
         }
         else
         {
-            Vector3 tempCurrentPlayerPosition = new Vector3(tempCurrentPlayer.transform.position.x,tempCurrentPlayer.transform.position.y,tempCurrentPlayer.transform.position.z);
-            tempCurrentPlayer.transform.position = new Vector3(tempSwapPlayer.transform.position.x,tempSwapPlayer.transform.position.y,tempSwapPlayer.transform.position.z);
-            tempSwapPlayer.transform.position = new Vector3(tempCurrentPlayerPosition.x, tempCurrentPlayerPosition.y, tempCurrentPlayerPosition.z);
+            return true;
         }
+
+    }
+
+    void SwapPlayer()
+    {
+
+        Vector3 tempCurrentPlayerPosition = new Vector3(m_CurrentPlayer.transform.position.x,m_CurrentPlayer.transform.position.y,m_CurrentPlayer.transform.position.z);
+        m_CurrentPlayer.transform.position = new Vector3(m_SwapPlayer.transform.position.x,m_SwapPlayer.transform.position.y,m_SwapPlayer.transform.position.z);
+        m_SwapPlayer.transform.position = new Vector3(tempCurrentPlayerPosition.x, tempCurrentPlayerPosition.y, tempCurrentPlayerPosition.z);
 
         m_Type = PickupType.empty;
         
@@ -170,8 +213,17 @@ public class PlayerAbility : MonoBehaviour {
 
     IEnumerator SwapChargeUp()
     {
-        
+        m_CurrentlySwapping = true;
         yield return new WaitForSeconds(m_SwapChargeUpTime);
+        m_CurrentlySwapping = false;
+        Destroy(m_PlayerOneParticles);
+        Destroy(m_PlayerTwoParticles);
+
+        GameObject tempGameObject = (GameObject)Instantiate(m_SwapParticlesEnd, m_CurrentPlayer.transform.position, m_CurrentPlayer.transform.rotation);
+        GameObject tempGameObjectTwo =(GameObject)Instantiate(m_SwapParticlesEnd, m_SwapPlayer.transform.position, m_SwapPlayer.transform.rotation);
+        Destroy(tempGameObject, 2.0f);
+        Destroy(tempGameObjectTwo, 2.0f);
+        
         SwapPlayer();
     }
 }
