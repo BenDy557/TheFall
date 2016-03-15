@@ -13,6 +13,7 @@ public class CharacterController : MonoBehaviour {
 	public PlayerState m_PlayerState;
     
 	public string name;
+    public string m_ControllerType;
     public int m_PlayerNumber;
 	public float moveForce = 100;
 	public float jumpForce = 1000f;
@@ -49,9 +50,10 @@ public class CharacterController : MonoBehaviour {
     public ParticleSystem m_ParticleSystemWallRightJump;
     public ParticleSystem m_ParticleSystemDoubleJump;
     public ParticleSystem m_ParticleSystemWinning;
+	public ParticleSystem m_ParticleSystemReverse;
     public GameObject m_SlowTimePlane;
     
-
+	public Color m_PlayerColor;
 	public Animator anim;
 	public GameObject Model;
 	private float maxSpeed = 100f;
@@ -75,18 +77,22 @@ public class CharacterController : MonoBehaviour {
             case 1:
                 name = "Player1";
                 GetComponent<MeshColour>().ColourizeMesh(MeshColour.PlayerColour.Red);
+		 		m_PlayerColor = new Color(122,7,7);
                 break;
             case 2:
                 name = "Player2";
                 GetComponent<MeshColour>().ColourizeMesh(MeshColour.PlayerColour.Blue);
+				m_PlayerColor = new Color(0,0,255);
                 break;
             case 3:
                 name = "Player3";
                 GetComponent<MeshColour>().ColourizeMesh(MeshColour.PlayerColour.Green);
+				m_PlayerColor = new Color(0,255,0);
                 break;
             case 4:
                 name = "Player4";
                 GetComponent<MeshColour>().ColourizeMesh(MeshColour.PlayerColour.Yellow);
+				m_PlayerColor = new Color(255,189,0);
                 break;
             default:
                 name = "InvalidPlayerNumber";
@@ -111,7 +117,6 @@ public class CharacterController : MonoBehaviour {
 		m_PlayerState = PlayerState.Idle;
 
 		fixeddeltatime = Time.fixedDeltaTime;
-
 
     }
 
@@ -145,7 +150,6 @@ public class CharacterController : MonoBehaviour {
 			grabPos = rightGrabCheck.position;
 			grabPos.y -= (height / 2)- 0.1f;
 			grabbingRight = Physics.Linecast (transform.position, grabPos, 1 << LayerMask.NameToLayer ("Ground"));
-			//Debug.Log(grabPos.y);
 		}
 		//stop players getting stuck at "steps"
 		if((grounded&&grabbingLeft || grounded&&grabbingRight)) {
@@ -153,16 +157,19 @@ public class CharacterController : MonoBehaviour {
 		}
 
 		//set jump values
-		if (Input.GetButtonDown (name+"Jump") && grounded) {
+        if (Input.GetButtonDown(m_ControllerType + name + "Jump") && grounded)
+        {
 			jump = true;
 		}
-		else if (Input.GetButtonDown (name+"Jump") && grabbingLeft) {
+        else if (Input.GetButtonDown(m_ControllerType + name + "Jump") && grabbingLeft)
+        {
 			jumpRight= true;
 		}
-		else if (Input.GetButtonDown (name+"Jump") && grabbingRight) {
+        else if (Input.GetButtonDown(m_ControllerType + name + "Jump") && grabbingRight)
+        {
 			jumpLeft = true;
 		}
-		else if (Input.GetButtonDown (name+"Jump") && m_DoubleJumpAvailable)
+        else if (Input.GetButtonDown(m_ControllerType + name + "Jump") && m_DoubleJumpAvailable)
 		{
 			m_DoubleJump = true;
 			m_DoubleJumpAvailable = false;
@@ -238,11 +245,17 @@ public class CharacterController : MonoBehaviour {
         }
 
 
+
+        if (Input.GetButtonDown(m_ControllerType + name + "Exit")) 
+        {
+            GameObject tempGameObject = GameObject.FindGameObjectWithTag("GameManager");
+            tempGameObject.GetComponent<GameManager>().ExitGame();
+        }
 	}
 	
 	void FixedUpdate()
 	{
-		float h = Input.GetAxis (name + "LeftStickX");
+		float h = Input.GetAxis (m_ControllerType + name + "LeftStickX");
 
 		//reverse controls effect
 		if (isReversed) {
@@ -422,7 +435,9 @@ public class CharacterController : MonoBehaviour {
 	IEnumerator ReversedControls(float time)
 	{
 		isReversed=true;
+		m_ParticleSystemReverse.enableEmission = true;
 		yield return new WaitForSeconds(time);
+		m_ParticleSystemReverse.enableEmission = false;
 		isReversed=false;
 	}
 

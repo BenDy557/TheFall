@@ -94,6 +94,7 @@
      <Compile Include="Assets\Scripts\Terrain\PendulumHammer.cs" />
      <Compile Include="Assets\Scripts\Terrain\Rotate.cs" />
      <Compile Include="Assets\Scripts\Terrain\RotateConstant.cs" />
+     <Compile Include="Assets\Scripts\UI\UICountdown.cs" />
      <Compile Include="Assets\Scripts\UI\UIPlayerDisplay.cs" />
      <Compile Include="Assets\textures\Mist\UVPanner.cs" />
      <None Include="Assets\Fonts\cyberfall\Font License.txt" />

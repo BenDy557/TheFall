@@ -8,6 +8,7 @@ public class RespawnManager : MonoBehaviour {
     public GameObject m_RespawnEffect;
 
 	public float m_RespawnTime = 1.0f;
+	public float m_RespawnImmunityTime = 3.0f;
 	// Use this for initialization
 	void Start () {
 		m_CameraMain = Camera.main;
@@ -40,6 +41,7 @@ public class RespawnManager : MonoBehaviour {
                     Instantiate(m_RespawnEffect, obj.transform.position + new Vector3(0.0f, -1.0f, 0.0f), obj.transform.rotation);
 
 					RespawnSuceeded = true;
+					Player.GetComponent<Player>().ActivateImmunity(m_RespawnImmunityTime);
 					Destroy (obj);
 				}
 				else 

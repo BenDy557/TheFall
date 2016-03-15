@@ -6,12 +6,13 @@ public class PlayerAbility : MonoBehaviour {
     public PickupType m_Type;
 
     private string m_PlayerNumber;
+    private string m_ControllerType;
 	private GameObject[] players;
 	private GameObject m_UIManager;
 	int m_ID;
-
+	public float m_PulseRange = 5;
 	[SerializeField] private float m_DoubleJumpDuration = 5.0f;
-
+	public ParticleSystem m_PulseEmmiter;
     public float m_SwapChargeUpTime = 2.0f;
 
 	// Use this for initialization
@@ -20,12 +21,13 @@ public class PlayerAbility : MonoBehaviour {
         m_Type = PickupType.empty;
         m_PlayerNumber = gameObject.GetComponent<CharacterController>().name;
 		m_ID = gameObject.GetComponent<CharacterController>().m_PlayerNumber;
+        m_ControllerType = gameObject.GetComponent<CharacterController>().m_ControllerType;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetButtonDown(m_PlayerNumber + "Ability"))
+        if (Input.GetButtonDown(m_ControllerType + m_PlayerNumber + "Ability"))
         {
             ActivateAbility();
         }
@@ -98,18 +100,19 @@ public class PlayerAbility : MonoBehaviour {
 
 	void EnableReverseControls(float time)
 	{
-		gameObject.GetComponent<CharacterFire> ().empoweredType = 2;
+		//gameObject.GetComponent<CharacterFire> ().empoweredType = 2;
 
 		///////////////DM: Below would just apply the debuff to all players other than the powerup user.(Tested and works)
-		/*players = new GameObject[0];
+		players = new GameObject[0];
 		players = GameObject.FindGameObjectsWithTag("Player");
+		m_PulseEmmiter.Play ();
 		foreach (GameObject player in players)
 		{
-			if (player.GetComponent<CharacterController>().name!= m_PlayerNumber)
+			if (player.GetComponent<CharacterController>().name!= m_PlayerNumber && Vector3.Distance(transform.position, player.transform.position)<m_PulseRange)
 			{
 				player.GetComponent<CharacterController>().EnableReverseControls(time);
 			}
-		}*/
+		}
 		m_Type = PickupType.empty;
 	}
 	public void ChangePickup(PickupType type)

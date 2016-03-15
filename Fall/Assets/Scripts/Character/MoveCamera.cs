@@ -14,12 +14,13 @@ public class MoveCamera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (m_TimeWaited < m_WaitTime) {
-			m_TimeWaited += Time.deltaTime;
-		} 
-		else {
+		// functionality moved to UICountdown script
+		//if (m_TimeWaited < m_WaitTime) {
+		//	m_TimeWaited += Time.deltaTime;
+		//} 
+		//else {
 			gameObject.transform.Translate (transform.up * speed * Time.deltaTime);
-		}
+		//}
 	}
 
 }

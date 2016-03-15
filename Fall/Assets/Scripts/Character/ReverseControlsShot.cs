@@ -19,8 +19,11 @@ public class ReverseControlsShot : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		if (other.tag == "Player" && other.gameObject != parentPlayer)
 		{
-			other.GetComponent<CharacterController>().EnableReverseControls(5.0f);
-			Destroy(gameObject);
+			if(!other.GetComponent<Player>().m_Immune)
+			{
+				other.GetComponent<CharacterController>().EnableReverseControls(5.0f);
+				Destroy(gameObject);
+			}
 		}
 	}
 	public void SetParentPlayer(GameObject parent)
