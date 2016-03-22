@@ -1,7 +1,8 @@
 ﻿ using UnityEngine;
 using System.Collections;
 
-public class DestructoShot : MonoBehaviour {
+public class DestructoShot : MonoBehaviour 
+{
 
 
 	public float speed = 10.0f;
@@ -9,32 +10,39 @@ public class DestructoShot : MonoBehaviour {
 	public float pushForce = 3000.0f;
 	private GameObject parentPlayer;
 	// Use this for initialization
-	void Start () {
+	void Start () 
+    {
 		Destroy (gameObject, range / speed);
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+    {
 		transform.Translate (transform.forward *speed* Time.deltaTime,Space.World);
 		//Debug.Log (transform.forward);
 	}
 
-	void OnTriggerEnter(Collider other) {
+	void OnTriggerEnter(Collider other) 
+    {
 		if (other.tag == "Ground" && other.gameObject.GetComponent<DestructoShotEffect>())
         {
             other.GetComponent<DestructoShotEffect>().Enable();
-			Destroy(gameObject);
+            GameObject tempGameObject = (GameObject)Instantiate(Resources.Load("Prefabs/DestructoBlockEffect"));
+            tempGameObject.transform.position = other.gameObject.transform.position;
+            tempGameObject.transform.rotation = other.gameObject.transform.rotation;
+            tempGameObject.transform.parent = other.transform;
+            Destroy(tempGameObject, 3.0f);
+			Destroy(gameObject,3.0f);
+            StopBullet();
         }
 
 
 		if (other.tag == "Player" && other.gameObject != parentPlayer)
         {
-			if (other.tag == "Player" && other.gameObject != parentPlayer) {
+			if (other.tag == "Player" && other.gameObject != parentPlayer)
+            {
 				Vector3 pushVector = other.gameObject.transform.position - transform.position;
 				other.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward*pushForce);
-				//Debug.DrawLine(transform.position,other.gameObject.transform.position,Color.red,10.0f);
-				//Debug.Log("start:"+transform.forward+". End:"+ transform.position);
-				Destroy(gameObject);
 			}
 		}
 	}
@@ -43,4 +51,10 @@ public class DestructoShot : MonoBehaviour {
 	{
 		parentPlayer = parent;
 	}
+
+    private void StopBullet()
+    {
+        speed = 0;
+        transform.FindChild("projectileSprite").GetComponent<SpriteRenderer>().enabled = false;
+    }
 }
