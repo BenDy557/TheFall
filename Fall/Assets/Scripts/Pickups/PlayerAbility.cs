@@ -78,30 +78,38 @@ public class PlayerAbility : MonoBehaviour {
                     m_PlayerTwoParticles = (GameObject)Instantiate(m_SwapParticles, m_SwapPlayer.transform.position, m_SwapPlayer.transform.rotation);
                     StartCoroutine(SwapChargeUp());
                 }
-                
-                
+
                 break;
             case PickupType.phaseBlock:
                 //Debug.Log("Phase");
                 EmpowerBullet();
+			gameObject.GetComponent<CharacterController> ().PlaySound (SoundEffects.Powerup);
                 break;
             case PickupType.rotate:
                 RotateAll();
+			gameObject.GetComponent<CharacterController> ().PlaySound (SoundEffects.Powerup);
                 break;
 			case PickupType.doubleJump:
 				EnableDoubleJump(m_DoubleJumpDuration);
+			gameObject.GetComponent<CharacterController> ().PlaySound (SoundEffects.Powerup);
 				break;
 			case PickupType.timeSlow:
 				EnableTimeSlow(m_DoubleJumpDuration);
+			gameObject.GetComponent<CharacterController> ().PlaySound (SoundEffects.Powerup);
 				break;
 			case PickupType.reverseControls:
 				EnableReverseControls(m_DoubleJumpDuration);
+				gameObject.GetComponent<CharacterController> ().PlaySound (SoundEffects.Powerup);
 				break;
             default:
                 Debug.Log("NOTHING");
                 break;
 
         }
+
+			
+
+
 		ClearPickup ();
     }
 
@@ -215,6 +223,7 @@ public class PlayerAbility : MonoBehaviour {
     IEnumerator SwapChargeUp()
     {
         m_CurrentlySwapping = true;
+		gameObject.GetComponent<CharacterController> ().PlaySound (SoundEffects.Swap);
         yield return new WaitForSeconds(m_SwapChargeUpTime);
         m_CurrentlySwapping = false;
         Destroy(m_PlayerOneParticles);
