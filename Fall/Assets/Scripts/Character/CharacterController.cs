@@ -2,7 +2,7 @@
 using System.Collections;
 
 public enum PlayerState {Idle,Running,Jumping,WallGrabLeft,WallGrabRight};
-
+public enum SoundEffects {Land,Shoot,Death,Jump,Powerup,Swap,KOH};
 public class CharacterController : MonoBehaviour {
 
 	
@@ -37,11 +37,14 @@ public class CharacterController : MonoBehaviour {
 
     //AUDIO
     [HideInInspector] public AudioSource m_AudioSource;
+	public AudioSource m_SlidingAudioSource;
     public AudioClip m_AudioClipLand;
     public AudioClip m_AudioClipShoot;
     public AudioClip m_AudioClipDeath;
     public AudioClip m_AudioClipJump;
-
+	public AudioClip m_AudioClipPowerup;
+	public AudioClip m_AudioClipSwap;
+	public AudioClip m_AudioClipKOH;
     //EFFECTS
     public ParticleSystem m_ParticleSystemLand;
     public ParticleSystem m_ParticleSystemWallLeft;
@@ -52,7 +55,7 @@ public class CharacterController : MonoBehaviour {
     public ParticleSystem m_ParticleSystemWinning;
 	public ParticleSystem m_ParticleSystemReverse;
     public GameObject m_SlowTimePlane;
-    
+	bool m_WinningTriggered = false;
 	public Color m_PlayerColor;
 	public Animator anim;
 	public GameObject Model;
@@ -241,6 +244,11 @@ public class CharacterController : MonoBehaviour {
 
         if(GetComponent<timer>().timeneeded<10.0f)
         {
+			if(!m_WinningTriggered)
+			{
+				PlaySound(SoundEffects.KOH);
+				m_WinningTriggered = true;
+			}
             m_ParticleSystemWinning.Play();
         }
 
@@ -351,6 +359,38 @@ public class CharacterController : MonoBehaviour {
 		}	
 	}
 
+	public void PlaySound(SoundEffects choice)
+	{
+		switch (choice) {
+		case SoundEffects.Land:
+			m_AudioSource.PlayOneShot(m_AudioClipLand);
+			break;
+		case SoundEffects.Death:
+			m_AudioSource.PlayOneShot(m_AudioClipDeath);
+			break;
+		case SoundEffects.Jump:
+			m_AudioSource.PlayOneShot(m_AudioClipJump);
+			break;
+		case SoundEffects.Shoot:
+			m_AudioSource.PlayOneShot(m_AudioClipShoot);
+			break;
+		case SoundEffects.Powerup:
+			m_AudioSource.PlayOneShot(m_AudioClipPowerup);
+			break;
+		case SoundEffects.Swap:
+			m_AudioSource.PlayOneShot(m_AudioClipSwap);
+			break;
+		case SoundEffects.KOH:
+			m_AudioSource.PlayOneShot(m_AudioClipKOH);
+			break;
+
+
+		}
+	}
+	// overloaded function for looping sound effects, where appropriate will toggle sounds.
+
+
+
     IEnumerator DoubleJumpParticleWait(float time)
     {
         //m_ParticleSystemDoubleJump.enableEmission = true;
@@ -374,12 +414,20 @@ public class CharacterController : MonoBehaviour {
 			anim.SetBool("Idle",true);
 			anim.SetBool("Running",false);
 			anim.SetBool("Sliding",false);
+			if(m_SlidingAudioSource.isPlaying)
+			{
+				m_SlidingAudioSource.Stop();
+			}
 			break;
 		case PlayerState.Jumping:
 			anim.SetTrigger("Jump");
 			anim.SetBool("Idle",false);
 			anim.SetBool("Running",false);
 			anim.SetBool("Sliding",false);
+			if(m_SlidingAudioSource.isPlaying)
+			{
+				m_SlidingAudioSource.Stop();
+			}
 			break;
 		case PlayerState.Running:
 			if(!anim.GetCurrentAnimatorStateInfo(0).IsName("Jumping"))
@@ -387,6 +435,10 @@ public class CharacterController : MonoBehaviour {
 				anim.SetBool("Idle",false);
 				anim.SetBool("Running",true);
 				anim.SetBool("Sliding",false);
+				if(m_SlidingAudioSource.isPlaying)
+				{
+					m_SlidingAudioSource.Stop();
+				}
 			}
 			break;
 		case PlayerState.WallGrabLeft:
@@ -398,6 +450,10 @@ public class CharacterController : MonoBehaviour {
 			{
 				Flip();
 			}
+			if(!m_SlidingAudioSource.isPlaying)
+			{
+				m_SlidingAudioSource.Play();
+			}
 			break;
 		case PlayerState.WallGrabRight:
 			anim.SetBool("Idle",false);
@@ -407,6 +463,10 @@ public class CharacterController : MonoBehaviour {
 			if(!facingRight)
 			{
 				Flip();
+			}
+			if(!m_SlidingAudioSource.isPlaying)
+			{
+				m_SlidingAudioSource.Play();
 			}
 			break;
 		}
