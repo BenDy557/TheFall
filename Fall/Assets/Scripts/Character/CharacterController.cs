@@ -408,6 +408,8 @@ public class CharacterController : MonoBehaviour {
 
 	void TransitionState(PlayerState state)
 	{
+		Vector3 rot;
+		Vector3 lookpos;
 		m_PlayerState = state;
 		switch (state) {
 		case PlayerState.Idle:
@@ -418,6 +420,10 @@ public class CharacterController : MonoBehaviour {
 			{
 				m_SlidingAudioSource.Stop();
 			}
+			//rot = Model.transform.rotation.eulerAngles;
+			//rot.y = 180;
+			//Model.transform.localEulerAngles = rot;
+			//Model.transform.rotation =  Quaternion.Euler(0, 180, 0) ;
 			break;
 		case PlayerState.Jumping:
 			anim.SetTrigger("Jump");
@@ -428,6 +434,13 @@ public class CharacterController : MonoBehaviour {
 			{
 				m_SlidingAudioSource.Stop();
 			}
+			rot = Model.transform.rotation.eulerAngles;
+			rot.y = -90;
+			Model.transform.eulerAngles = rot;
+			//rot = Model.transform.rotation.eulerAngles;
+			//rot.y = 180;
+			//Model.transform.localEulerAngles = rot;
+			//Model.transform.rotation =  Quaternion.Euler(0, , 0) ;
 			break;
 		case PlayerState.Running:
 			if(!anim.GetCurrentAnimatorStateInfo(0).IsName("Jumping"))
@@ -439,6 +452,13 @@ public class CharacterController : MonoBehaviour {
 				{
 					m_SlidingAudioSource.Stop();
 				}
+				rot = Model.transform.rotation.eulerAngles;
+				rot.y = -90;
+				Model.transform.eulerAngles = rot;
+				//rot = Model.transform.rotation.eulerAngles;
+				//rot.y = 180;
+				//Model.transform.localEulerAngles = rot;
+				//Model.transform.rotation =  Quaternion.Euler(0, 180, 0) ;
 			}
 			break;
 		case PlayerState.WallGrabLeft:
@@ -454,6 +474,13 @@ public class CharacterController : MonoBehaviour {
 			{
 				m_SlidingAudioSource.Play();
 			}
+			rot = Model.transform.rotation.eulerAngles;
+			rot.y = 180;
+			Model.transform.eulerAngles = rot;
+			//Model.transform.rotation =  Quaternion.Euler(0, 90, 0) ;
+			//lookpos = Model.transform.position;
+			//lookpos.z -= 10;
+			//transform.LookAt(lookpos);
 			break;
 		case PlayerState.WallGrabRight:
 			anim.SetBool("Idle",false);
@@ -468,6 +495,13 @@ public class CharacterController : MonoBehaviour {
 			{
 				m_SlidingAudioSource.Play();
 			}
+			rot = Model.transform.rotation.eulerAngles;
+			rot.y = 0;
+			Model.transform.eulerAngles = rot;
+			//Model.transform.rot =  Quaternion.Euler(0, 90, 0) ;
+			//lookpos = Model.transform.position;
+			//lookpos.z += 10;
+			//Model.transform.LookAt(lookpos);
 			break;
 		}
 	}

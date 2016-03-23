@@ -1,0 +1,156 @@
+fileFormatVersion: 2
+guid: 0c318e3a1c6a01c47991735c8f3d0500
+timeCreated: 1458743293
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Body_CTRL
+    100002: //RootNode
+    100004: Left_Hand_JNT
+    100006: Lft_Arm_CTRL
+    100008: Lft_Foot_Ctrl
+    100010: Lft_Foot_JNT
+    100012: Mask_Head_JNT
+    100014: Mask_Mesh
+    100016: Rgt_Arm_CTRL
+    100018: Rgt_Foot_CTRL
+    100020: Rgt_Foot_JNT
+    100022: Rgt_Hand_JNT
+    100024: Root_CTRL
+    100026: Root_Jnt
+    400000: Body_CTRL
+    400002: //RootNode
+    400004: Left_Hand_JNT
+    400006: Lft_Arm_CTRL
+    400008: Lft_Foot_Ctrl
+    400010: Lft_Foot_JNT
+    400012: Mask_Head_JNT
+    400014: Mask_Mesh
+    400016: Rgt_Arm_CTRL
+    400018: Rgt_Foot_CTRL
+    400020: Rgt_Foot_JNT
+    400022: Rgt_Hand_JNT
+    400024: Root_CTRL
+    400026: Root_Jnt
+    4300000: Mask_Mesh
+    7400000: JumpNew
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: Mask_Mesh
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 3
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: JumpNew
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 80
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Mask_Mesh
+        weight: 1
+      - path: Root_CTRL
+        weight: 1
+      - path: Root_CTRL/Body_CTRL
+        weight: 1
+      - path: Root_CTRL/Lft_Arm_CTRL
+        weight: 1
+      - path: Root_CTRL/Lft_Foot_Ctrl
+        weight: 1
+      - path: Root_CTRL/Rgt_Arm_CTRL
+        weight: 1
+      - path: Root_CTRL/Rgt_Foot_CTRL
+        weight: 1
+      - path: Root_Jnt
+        weight: 1
+      - path: Root_Jnt/Mask_Head_JNT
+        weight: 1
+      - path: Root_Jnt/Mask_Head_JNT/Left_Hand_JNT
+        weight: 1
+      - path: Root_Jnt/Mask_Head_JNT/Lft_Foot_JNT
+        weight: 1
+      - path: Root_Jnt/Mask_Head_JNT/Rgt_Foot_JNT
+        weight: 1
+      - path: Root_Jnt/Mask_Head_JNT/Rgt_Hand_JNT
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
