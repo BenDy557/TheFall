@@ -29,12 +29,13 @@ public class GenerateLevel : MonoBehaviour {
 
 	void SpawnFloor()
 	{
-		int numberOfItterations = ((10/ (int)m_BasicBlock.transform.localScale.x)+1);
+		/*int numberOfItterations = ((10/ (int)m_BasicBlock.transform.localScale.x)+1);
 
 		for (int cnt = -numberOfItterations; cnt < numberOfItterations; cnt++) {
 			Vector3 targetLocation = new Vector3(cnt* m_BasicBlock.transform.localScale.x,m_StartPoint.position.y,m_StartPoint.position.z);
 			Instantiate(m_BasicBlock,targetLocation,Quaternion.identity);
-		}
+		}*/
+        Instantiate(m_BasicBlock, m_StartPoint.position, Quaternion.identity);
 	}
 
 	public void Itterate()
