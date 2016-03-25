@@ -61,7 +61,7 @@ public class timer : MonoBehaviour {
 			timertext.color = tempcolor;
 			//timertext = "";
 		}
-		timertext.text = timeneeded.ToString ("F2");
+		timertext.text = timeneeded.ToString ("F1");
 		if (timeneeded <= 0) {
 			if(m_GameManager.GetComponent<GameManager>().m_GameState == GameState.Game)
 			{

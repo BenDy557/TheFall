@@ -38,7 +38,7 @@ public class DummyPrefab : MonoBehaviour {
 			}
 
 		} else {
-			Debug.Log ("Error: missing prefab resource");
+			Debug.Log ("Error: missing prefab resource " + transform.name);
 		}
 
 		Destroy (gameObject);
