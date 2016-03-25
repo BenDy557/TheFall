@@ -78,10 +78,7 @@ public class GameManager : MonoBehaviour {
         //if player joined, instantiate play area for player
         //wait until players ready up
         //when all players ready up, load in level with appropriate amount of players
-		if (GameObject.FindGameObjectWithTag ("LobbyRecord").GetComponent<LobbyRecord> () != null) {
-			m_LobySpawns = GameObject.FindGameObjectWithTag ("LobbyRecord").GetComponent<LobbyRecord> ().m_LobySpawns;
-			m_ReadyDisplays = GameObject.FindGameObjectWithTag ("LobbyRecord").GetComponent<LobbyRecord> ().m_ReadyDisplays;
-		}
+		
 		//System.Array.Copy (GameObject.FindGameObjectWithTag ("LobbyRecord").GetComponent<LobbyRecord> ().m_LobySpawns, m_LobySpawns, 4);
 		//GameObject.FindGameObjectWithTag ("LobbyRecord").GetComponent<LobbyRecord> ().m_LobySpawns.CopyTo (m_LobySpawns, 0);
 	}
@@ -107,7 +104,15 @@ public class GameManager : MonoBehaviour {
                 case GameState.SplashScreen:
 
                     //listen for all input, if A/X button pressed, exit splash screen
-                    if (Input.GetKeyDown(KeyCode.Return))
+                    if (Input.GetKeyDown(KeyCode.Return) 
+                                        || Input.GetButtonDown("XboxPlayer1Start") 
+                                        || Input.GetButtonDown("XboxPlayer2Start") 
+                                        || Input.GetButtonDown("XboxPlayer3Start") 
+                                        || Input.GetButtonDown("XboxPlayer4Start") 
+                                        || Input.GetButtonDown("PsPlayer1Start") 
+                                        || Input.GetButtonDown("PsPlayer2Start") 
+                                        || Input.GetButtonDown("PsPlayer3Start") 
+                                        || Input.GetButtonDown("PsPlayer4Start"))
                     {
                         //Load Lobby scene
                         m_GameState = GameState.Lobby;
@@ -343,6 +348,7 @@ public class GameManager : MonoBehaviour {
                     break;
 
                 case GameState.Lobby:
+                    FindLobbyRecord();
                     if (m_GameStatePrev == GameState.Game)
                     {
                         m_Players.Clear();
@@ -425,6 +431,15 @@ public class GameManager : MonoBehaviour {
         else if (m_GameState == GameState.Lobby)
         {
             Application.Quit();
+        }
+    }
+
+    void FindLobbyRecord()
+    {
+        if (GameObject.FindGameObjectWithTag("LobbyRecord").GetComponent<LobbyRecord>() != null)
+        {
+            m_LobySpawns = GameObject.FindGameObjectWithTag("LobbyRecord").GetComponent<LobbyRecord>().m_LobySpawns;
+            m_ReadyDisplays = GameObject.FindGameObjectWithTag("LobbyRecord").GetComponent<LobbyRecord>().m_ReadyDisplays;
         }
     }
 }
