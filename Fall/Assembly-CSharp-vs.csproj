@@ -72,6 +72,7 @@
      <Compile Include="Assets\Scripts\Generation\EndTrigger.cs" />
      <Compile Include="Assets\Scripts\Generation\GenerateLevel.cs" />
      <Compile Include="Assets\Scripts\Generation\PrefabScript.cs" />
+     <Compile Include="Assets\Scripts\Generation\TestPlacer.cs" />
      <Compile Include="Assets\Scripts\Lobby\Blink.cs" />
      <Compile Include="Assets\Scripts\Lobby\PlayerLobbyMenu.cs" />
      <Compile Include="Assets\Scripts\Lobby\ReadyDisplay.cs" />
